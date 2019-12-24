@@ -51,10 +51,10 @@ set nowrap
 
 set colorcolumn=80
 
+colorscheme jellybeans
 if has("gui_running")
    "set fullscreen
    set transparency=10
-   colorscheme jellybeans
 endif
 
 set shiftround " sr
