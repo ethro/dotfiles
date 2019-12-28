@@ -3,7 +3,7 @@
 git clone --bare https://github.com/ethro/dotfiles.git $HOME/.dotfiles
 
 function dots {
-   /usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME $@
+   git --git-dir=$HOME/.dotfiles --work-tree=$HOME $@
 }
 
 mkdir -p .dotfile-backup
