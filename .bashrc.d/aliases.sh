@@ -10,5 +10,7 @@ fi
 alias l='ls -lh'
 alias la='ls -lah'
 
+alias df='df -h'
+
 alias gs='git s -b --ahead-behind'
 
