@@ -4,7 +4,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
    alias tmx='tmux new-session -s main'
    alias tmxa='tmux attach'
 elif [[ "$OSTYPE" == "msys" ]]; then
-   alias dots='git --git-dir=/c/Users/%USERNAME% --work-tree=/c/Users/%USERNAME%'
+   alias dots='git --git-dir=/c/Users/$USERNAME/.dotfiles/ --work-tree=/c/Users/$USERNAME'
 fi
 
 alias l='ls -lh'

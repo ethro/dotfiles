@@ -70,7 +70,8 @@ if has("gui_running")
       hi Comment gui=None
    endif
 else " terminal
-   set clipboard=exclude=:.* " research this
+   "set clipboard=exclude=:.* " research this
+   set t_Co=256
 endif
 
 if &term == "screen"
