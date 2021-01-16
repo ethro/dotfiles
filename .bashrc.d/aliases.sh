@@ -5,8 +5,12 @@ fi
 
 alias dots='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
-alias l='ls -lh'
-alias la='ls -lah'
+alias ls='ls --color'
+alias lsa='ls -a --color'
+alias l='ls -1 --color'
+alias ll='ls -lh --color'
+alias la='ls -1a --color'
+alias lla='ls -lah --color'
 
 alias df='df -h'
 

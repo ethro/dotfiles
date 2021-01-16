@@ -86,6 +86,9 @@ nnoremap <silent> <Leader>et :tabnew<CR>:e ~/.tmux.conf<CR>
 nnoremap <silent> <Leader>s :tabe<CR>:Ex<CR>
 nnoremap <silent> <Leader>f :tabe %<CR>:Ex<CR>
 
+nnoremap <silent> <Leader>q :qa<CR>
+nnoremap <silent> <Leader>w :w<CR>
+
 " ctags
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 map <Leader><C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>

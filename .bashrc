@@ -2,7 +2,7 @@
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
+	. /etc/bash.bashrc
 fi
 
 # User specific environment
@@ -20,7 +20,7 @@ export PATH
 # Run any shell script in ~/.bashrc.d to set up environment
 for i in ~/.bashrc.d/*.sh ; do
     if [ -r "$i" ]; then
-        if [ "${-#*i}" != "$-" ]; then 
+        if [ "${-#*i}" != "$-" ]; then
             . "$i"
         else
             . "$i" >/dev/null
