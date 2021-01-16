@@ -1,6 +1,6 @@
 #!/bin/bash
 
-remoteURL=https://github.com/ethro/dotfiles.git
+remoteURL=git@github.com:ethro/dotfiles.git
 
 cd ~/
 git clone --bare $remoteURL $HOME/.dotfiles
