@@ -6,3 +6,6 @@ cd "$HOME"
 
 echo "Init submodules"
 yadm submodule update --recursive --init
+
+mkdir -p ~/.tmux/plugins
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
