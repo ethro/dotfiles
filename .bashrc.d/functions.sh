@@ -155,38 +155,24 @@ pvr()
    pip install -r requirements.txt
 }
 
-#:J:## Docker wrapper
-#:J:#doc ()
-#:J:#{
-#:J:#  case "$1" in
-#:J:#    up)
-#:J:#      systemctl start docker
-#:J:#      ;;
-#:J:#    down)
-#:J:#      systemctl stop docker
-#:J:#      ;;
-#:J:#    start)
-#:J:#      shift;
-#:J:#      docker container start $@
-#:J:#      ;;
-#:J:#    stop)
-#:J:#      shift;
-#:J:#      docker container stop $@
-#:J:#      ;;
-#:J:#    ls)
-#:J:#      docker ps -a
-#:J:#      ;;
-#:J:#    li)
-#:J:#      docker images
-#:J:#      ;;
-#:J:#    x|exec)
-#:J:#      shift;
-#:J:#      docker exec $@
-#:J:#      ;;
-#:J:#    a|attach)
-#:J:#      docker container attach $2
-#:J:#      ;;
-#:J:#  esac
-#:J:#}
-#:J:#
+pvp()
+{
+   python3 -m venv ".venv_$1"
+   source ".venv_$1/bin/activate"
+   pip install pyproject.toml
+}
+
+ssh_tx_pub()
+{
+   # Attempt to transfer the default id_rsa.pub to the hosts authorized_keys
+   _PUBLIC_KEY=~/.ssh/id_rsa.pub
+   _HOST_ALIAS=$1
+   _HOST_USERNAME=$2
+   if [ -z ${_HOST_USERNAME} ]; then
+      _HOST_USERNAME=$USER
+   fi
+   if [ -e $_PUBLIC_KEY ]; then
+      cat $_PUBLIC_KEY | ssh -e none $_HOST_USERNAME@$_HOST_ALIAS 'cat >> .ssh/authorized_keys'
+   fi
+}
 

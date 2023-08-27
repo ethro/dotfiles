@@ -35,7 +35,6 @@ require('lazy').setup({
   --   },
   -- },
   'sakhnik/nvim-gdb',
-  'averms/black-nvim',
 
   'raafatturki/hex.nvim',
 
