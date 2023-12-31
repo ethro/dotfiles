@@ -1,0 +1,14 @@
+import = ["/home/a00/.config/alacritty/themes/themes/jellybeans.toml"]
+live_config_reload = true
+
+[cursor.style]
+shape = "Block"
+
+[font]
+size = 10.0
+
+[font.normal]
+family = "Cousine"
+
+[window]
+opacity = 1.0

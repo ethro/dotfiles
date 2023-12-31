@@ -1,4 +1,3 @@
-
 #[ "$UID" ] || UID=`id -u`
 #usercolor='00;93'
 #dircolor='00;94'
@@ -99,6 +98,5 @@ colors_01()
 ### tw = (STICKY_OTHER_WRITABLE)    Directory that is sticky and other-writable (+t,o+w)
 ### *.extension =   Every file using this extension e.g. *.rpm = files with the ending .rpm
 
-LS_COLORS=$LS_COLORS:'di=0;94:ow=0;35;40:ex=0;36:'
+LS_COLORS=$LS_COLORS:'di=0;94:ow=0;0;35:ex=0;36:'
 export LS_COLORS
-

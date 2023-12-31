@@ -1,9 +1,9 @@
-# ██╗██████╗ 
+# ██╗██████╗
 # ██║╚════██╗
 # ██║ █████╔╝
 # ██║ ╚═══██╗
 # ██║██████╔╝
-# ╚═╝╚═════╝ 
+# ╚═╝╚═════╝
 
 set $mod Mod4
 set $alt Mod1
@@ -12,7 +12,7 @@ default_border pixel 1
 default_floating_border normal
 hide_edge_borders none
 
-# Use Mouse+$mod to drag floating windows
+# Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 bindsym $mod+Return exec alacritty
@@ -96,7 +96,7 @@ bindsym $mod+Ctrl+Right workspace next
 bindsym $mod+Ctrl+Left workspace prev
 
 # choose random background
-bindsym $alt+b exec feh --bg-fill --randomize ~/.config/bgs/
+bindsym $alt+b exec feh --bg-fill --randomize ~/.config/wallpapers/
 
 # Workspace names
 # to display names or symbols instead of plain workspace numbers you can use
@@ -149,40 +149,6 @@ bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10; workspace $ws10
 
-# Open applications on specific workspaces
-# assign [class="Thunderbird"] $ws1
-# assign [class="Pale moon"] $ws2
-# assign [class="Pcmanfm"] $ws3
-# assign [class="Skype"] $ws5
-
-# Open specific applications in floating mode
-for_window [title="alsamixer"] floating enable border pixel 1
-for_window [class="calamares"] floating enable border normal
-for_window [class="Clipgrab"] floating enable
-for_window [title="File Transfer*"] floating enable
-for_window [class="fpakman"] floating enable
-for_window [class="Galculator"] floating enable border pixel 1
-for_window [class="GParted"] floating enable border normal
-for_window [title="i3_help"] floating enable sticky enable border normal
-for_window [class="Lightdm-settings"] floating enable
-for_window [class="Lxappearance"] floating enable sticky enable border normal
-for_window [class="Manjaro-hello"] floating enable
-for_window [class="Manjaro Settings Manager"] floating enable border normal
-for_window [title="MuseScore: Play Panel"] floating enable
-for_window [class="Nitrogen"] floating enable sticky enable border normal
-for_window [class="Oblogout"] fullscreen enable
-for_window [class="octopi"] floating enable
-for_window [title="About Pale Moon"] floating enable
-for_window [class="Pamac-manager"] floating enable
-for_window [class="Pavucontrol"] floating enable
-for_window [class="qt5ct"] floating enable sticky enable border normal
-for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
-for_window [class="Simple-scan"] floating enable border normal
-for_window [class="(?i)System-config-printer.py"] floating enable border normal
-for_window [class="Skype"] floating enable border normal
-for_window [class="Timeset-gui"] floating enable border normal
-for_window [class="(?i)virtualbox"] floating enable border normal
-for_window [class="Xfburn"] floating enable
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -194,24 +160,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-
-# Set shut down, restart and locking features
-#bindsym $mod+0 mode "$mode_system"
-#set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
-#mode "$mode_system" {
-#    bindsym l exec --no-startup-id i3exit lock, mode "default"
-#    bindsym s exec --no-startup-id i3exit suspend, mode "default"
-#    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
-#    bindsym e exec --no-startup-id i3exit logout, mode "default"
-#    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-#    bindsym r exec --no-startup-id i3exit reboot, mode "default"
-#    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
-#
-#    # exit system mode: "Enter" or "Escape"
-#    bindsym Return mode "default"
-#    bindsym Escape mode "default"
-#}
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # Resize window (you can also use the mouse for that)
 bindsym $mod+r mode "resize"
@@ -232,14 +181,11 @@ mode "resize" {
         bindsym Up resize shrink height 10 px or 10 ppt
         bindsym Right resize grow width 10 px or 10 ppt
 
-        # exit resize mode: Enter or Escape
+        # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
         bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
 }
-
-# Lock screen
-#bindsym $mod+Ctrl+l exec --no-startup-id i3lock -i ~/.config/bgs/wallpaper12.jpg
-bindsym $alt+l exec --no-startup-id betterlockscreen -l
 
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:
@@ -372,6 +318,8 @@ mode "$mode_gaps_outer" {
         bindsym Escape mode "default"
 }
 
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
@@ -384,27 +332,33 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 5
 # Autostart applications
 #exec --no-startup-id sh ~/.config/xrandr/config.sh
 #exec --no-startup-id sh ~/.screenlayout/tv_laptop.sh
-
-#:J: manjaro :J: # exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-#:J: manjaro :J: # #exec --no-startup-id nitrogen --restore; sleep 1; picom -b
-#:J: manjaro :J: # #exec --no-startup-id manjaro-hello
-#:J: manjaro :J: # exec --no-startup-id xfce4-power-manager
-#:J: manjaro :J: # exec --no-startup-id pamac-tray
-#:J: manjaro :J: # exec --no-startup-id clipit #:J: manjaro :J: # # exec --no-startup-id blueman-applet
-#:J: manjaro :J: # # exec_always --no-startup-id sbxkb
-#:J: manjaro :J: # exec --no-startup-id start_conky_maia
-#:J: manjaro :J: # # exec --no-startup-id start_conky_green
-#:J: manjaro :J: # # :J: commenting out to disable screen lock after timeout
-#:J: manjaro :J: # # exec --no-startup-id xautolock -time 10 -locker blurlock
-#:J: manjaro :J: # exec_always --no-startup-id ff-theme-util
-#:J: manjaro :J: # exec_always --no-startup-id fix_xcursor
-
 #exec --no-startup-id feh --bg-fill ~/.config/bgs/wallpaper12.png &
 exec --no-startup-id source ~/.fehbg
 exec --no-startup-id feh --bg-fill --randomize ~/.config/bgs/ &
 #exec --no-startup-id feh --randomize --bg-fill ~/.config/bgs
 exec --no-startup-id sh ~/.config/polybar/launch.sh &
 exec_always --no-startup-id xmodmap ~/.Xmodmap &
-exec --no-startup-id picom -b 
-#exec --no-startup-id conky -c ~/.config/conky/conkyrc 
-#exec --no-startup-id nm-applet &
+exec --no-startup-id picom -b
+#exec --no-startup-id conky -c ~/.config/conky/conkyrc
+
+# Start XDG autostart .desktop files using dex. See also
+# https://wiki.archlinux.org/index.php/XDG_Autostart
+exec --no-startup-id dex-autostart --autostart --environment i3
+
+# The combination of xss-lock, nm-applet and pactl is a popular choice, so
+# they are included here as an example. Modify as you see fit.
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+# exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock-color --nofork
+
+# Lock screen
+#bindsym $mod+Ctrl+l exec --no-startup-id i3lock -i ~/.config/bgs/wallpaper12.jpg
+exec --no-startup-id betterlockscreen -w dim
+exec --no-startup-id source ~/.fehbg
+bindsym $alt+l exec betterlockscreen -l
+# bindsym $alt+l exec --no-startup-id loginctl lock-session
+
+
+# NetworkManager is the most popular way to manage wireless networks on Linux,
+# and nm-applet is a desktop environment-independent system tray GUI for it.
+exec --no-startup-id nm-applet

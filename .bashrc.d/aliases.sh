@@ -48,3 +48,8 @@ alias mntcd='usrmnt /dev/sr0 /mnt/sr0'
 alias umntcd='sudo umount /mnt/sr0'
 
 alias cryptopen='sudo cryptsetup luksOpen'
+
+alias ya='yadm'
+alias yazy='lazygit -w ~/ -g ~/.local/share/yadm/repo.git/'
+
+alias fdi='fd -I'
