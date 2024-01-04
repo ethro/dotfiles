@@ -13,6 +13,7 @@ require("lazy").setup({
     { import = "az.plugins" },
     { import = "az.plugins.extras.lang" },
     { import = "az.plugins.extras.editor" },
+    { import = "az.plugins.extras.test.core" },
     { import = "az.plugins.dap.core" },
   },
   install = { colorscheme = { "habamax" } },

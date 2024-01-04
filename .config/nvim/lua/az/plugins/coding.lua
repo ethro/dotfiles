@@ -15,6 +15,10 @@ local M = {
       require("conform").setup({
         formatters_by_ft = {
           lua = { "stylua", "luaformatter" },
+          json = { "prettierd" },
+          markdown = { "prettierd" },
+          sh = { "shfmt" },
+          yaml = { "yamlfmt" },
           -- Conform will run multiple formatters sequentially
           python = { "isort", "black" },
         },
@@ -206,7 +210,7 @@ local M = {
   -- comments
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
-    lazy = true,
+    lazy = false,
     opts = {
       enable_autocmd = false,
     },

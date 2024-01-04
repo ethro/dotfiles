@@ -4,7 +4,7 @@ return {
     {
       "jbyuki/one-small-step-for-vimkind",
       -- stylua: ignore
-      lazy = true,
+      lazy = false,
       config = function()
         local dap = require("dap")
         dap.adapters.nlua = function(callback, conf)

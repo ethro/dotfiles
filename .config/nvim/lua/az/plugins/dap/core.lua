@@ -12,7 +12,7 @@ end
 
 return {
   "mfussenegger/nvim-dap",
-  lazy = true,
+  lazy = false,
 
   dependencies = {
 

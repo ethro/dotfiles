@@ -6,7 +6,7 @@ local M = {
   {
     "stevearc/aerial.nvim",
     -- TODO: event = "LazyFile",
-    lazy = true,
+    lazy = false,
     opts = function()
       local icons = vim.deepcopy(Config.icons.kinds)
 
@@ -54,7 +54,7 @@ local M = {
   -- Telescope integration
   {
     "nvim-telescope/telescope.nvim",
-    lazy = true,
+    lazy = false,
     optional = true,
     opts = function()
       Util.on_load("telescope.nvim", function()
@@ -73,7 +73,7 @@ local M = {
   -- edgy integration
   {
     "folke/edgy.nvim",
-    lazy = true,
+    lazy = false,
     optional = true,
     opts = function(_, opts)
       local edgy_idx = Util.plugin.extra_idx("ui.edgy")
@@ -98,7 +98,7 @@ local M = {
   -- lualine integration
   {
     "nvim-lualine/lualine.nvim",
-    lazy = true,
+    lazy = false,
     optional = true,
     opts = function(_, opts)
       table.insert(opts.sections.lualine_c, {

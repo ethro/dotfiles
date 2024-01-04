@@ -1,7 +1,7 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    lazy = true,
+    lazy = false,
     opts = function(_, opts)
       if type(opts.ensure_installed) == "table" then
         vim.list_extend(opts.ensure_installed, { "markdown", "markdown_inline" })
@@ -10,7 +10,7 @@ return {
   },
   {
     "williamboman/mason.nvim",
-    lazy = true,
+    lazy = false,
     opts = function(_, opts)
       opts.ensure_installed = opts.ensure_installed or {}
       vim.list_extend(opts.ensure_installed, { "markdownlint", "marksman" })
@@ -28,7 +28,7 @@ return {
   -- },
   {
     "mfussenegger/nvim-lint",
-    lazy = true,
+    lazy = false,
     optional = true,
     opts = {
       linters_by_ft = {
@@ -38,7 +38,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    lazy = true,
+    lazy = false,
     opts = {
       servers = {
         marksman = {},
@@ -49,7 +49,7 @@ return {
   -- Markdown preview
   {
     "iamcco/markdown-preview.nvim",
-    lazy = true,
+    lazy = false,
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
     build = function()
       vim.fn["mkdp#util#install"]()
@@ -69,7 +69,7 @@ return {
 
   {
     "lukas-reineke/headlines.nvim",
-    lazy = true,
+    lazy = false,
     opts = function()
       local opts = {}
       for _, ft in ipairs({ "markdown", "norg", "rmd", "org" }) do

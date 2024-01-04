@@ -1,7 +1,7 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    lazy = true,
+    lazy = false,
     opts = function(_, opts)
       if type(opts.ensure_installed) == "table" then
         vim.list_extend(opts.ensure_installed, {
@@ -15,7 +15,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    lazy = true,
+    lazy = false,
     opts = {
       servers = {
         gopls = {
@@ -88,7 +88,7 @@ return {
   -- Ensure Go tools are installed
   {
     "williamboman/mason.nvim",
-    lazy = true,
+    lazy = false,
     opts = function(_, opts)
       opts.ensure_installed = opts.ensure_installed or {}
       vim.list_extend(opts.ensure_installed, { "goimports", "gofumpt" })
@@ -118,7 +118,7 @@ return {
   -- },
   {
     "stevearc/conform.nvim",
-    lazy = true,
+    lazy = false,
     optional = true,
     opts = {
       formatters_by_ft = {
@@ -128,7 +128,7 @@ return {
   },
   {
     "mfussenegger/nvim-dap",
-    lazy = true,
+    lazy = false,
     optional = true,
     dependencies = {
       {
@@ -146,7 +146,7 @@ return {
   },
   {
     "nvim-neotest/neotest",
-    lazy = true,
+    lazy = false,
     optional = true,
     dependencies = {
       "nvim-neotest/neotest-go",

@@ -3,7 +3,7 @@ local M = {
     -- Add C/C++ to treesitter
     {
       "nvim-treesitter/nvim-treesitter",
-      lazy = true,
+      lazy = false,
       opts = function(_, opts)
         if type(opts.ensure_installed) == "table" then
           vim.list_extend(opts.ensure_installed, { "c", "cpp" })
@@ -13,7 +13,7 @@ local M = {
 
     {
       "p00f/clangd_extensions.nvim",
-      lazy = true,
+      lazy = false,
       config = function() end,
       opts = {
         inlay_hints = {
@@ -45,7 +45,7 @@ local M = {
     -- Correctly setup lspconfig for clangd 🚀
     {
       "neovim/nvim-lspconfig",
-      lazy = true,
+      lazy = false,
       opts = {
         servers = {
           -- Ensure mason installs the server
@@ -98,7 +98,7 @@ local M = {
 
     {
       "nvim-cmp",
-      lazy = true,
+      lazy = false,
       opts = function(_, opts)
         table.insert(opts.sorting.comparators, 1, require("clangd_extensions.cmp_scores"))
       end,
@@ -108,7 +108,7 @@ local M = {
     -- Also look into supporting one or the other based on a project configuration file
     {
       "mfussenegger/nvim-dap",
-      lazy = true,
+      lazy = false,
       optional = true,
       dependencies = {
         -- Ensure C/C++ debugger is installed

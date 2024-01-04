@@ -36,7 +36,7 @@ local M = {
   -- better vim.ui
   {
     "stevearc/dressing.nvim",
-    lazy = true,
+    lazy = false,
     init = function()
       ---@diagnostic disable-next-line: duplicate-set-field
       vim.ui.select = function(...)
@@ -52,7 +52,7 @@ local M = {
   },
 
   -- ui components
-  { "MunifTanjim/nui.nvim", lazy = true },
+  { "MunifTanjim/nui.nvim", lazy = false },
   -- Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
   {
     "folke/noice.nvim",

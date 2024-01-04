@@ -3,7 +3,7 @@ return {
   -- add yaml specific modules to treesitter
   {
     "nvim-treesitter/nvim-treesitter",
-    lazy = true,
+    lazy = false,
     opts = function(_, opts)
       if type(opts.ensure_installed) == "table" then
         vim.list_extend(opts.ensure_installed, { "yaml" })
@@ -14,14 +14,14 @@ return {
   -- yaml schema support
   {
     "b0o/SchemaStore.nvim",
-    lazy = true,
+    lazy = false,
     version = false, -- last release is way too old
   },
 
   -- correctly setup lspconfig
   {
     "neovim/nvim-lspconfig",
-    lazy = true,
+    lazy = false,
     opts = {
       -- make sure mason installs the server
       servers = {

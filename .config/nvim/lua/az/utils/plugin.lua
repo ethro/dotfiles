@@ -4,7 +4,7 @@ local Util = require("az.utils")
 ---@class util.plugin
 local M = {}
 
-M.use_lazy_file = true
+M.use_lazy_file = false
 M.lazy_file_events = { "BufReadPost", "BufNewFile", "BufWritePre" }
 
 ---@type table<string, string>

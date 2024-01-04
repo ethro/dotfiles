@@ -1,42 +1,34 @@
-return {
+local M = {
   {
     "nvim-treesitter/nvim-treesitter",
-    lazy = true,
     opts = function(_, opts)
       if type(opts.ensure_installed) == "table" then
         vim.list_extend(opts.ensure_installed, { "ninja", "python", "rst", "toml" })
       end
     end,
   },
-  -- TODO: Investigate if I can move ft formatters to lang files.
-  -- {
-  --   "stevearc/conform.nvim",
-  --   opts = {
-  --     formatters_by_ft = {
-  --       ["python"] = { "isort", "black" },
-  --     },
-  --   },
-  -- },
-  -- {
-  --   "neovim/nvim-lspconfig",
-  --   opts = {
-  --     servers = {
-  --       pylsp = {
-  --         settings = {
-  --           pylsp = {
-  --             plugins = {
-  --               pyflakes = { enabled = false },
-  --             },
-  --           },
-  --         },
-  --       },
-  --     },
-  --     setup = {},
-  --   },
-  -- },
+  {
+    "neovim/nvim-lspconfig",
+
+    opts = {
+      servers = {
+        pylsp = {
+          settings = {
+            pylsp = {
+              plugins = {
+                mypy = { enabled = true },
+                pycodestyle = { enabled = true },
+                pyflakes = { enabled = false },
+              },
+            },
+          },
+        },
+      },
+      setup = {},
+    },
+  },
   {
     "nvim-neotest/neotest",
-    lazy = true,
     optional = true,
     dependencies = {
       "nvim-neotest/neotest-python",
@@ -45,15 +37,14 @@ return {
       adapters = {
         ["neotest-python"] = {
           -- Here you can specify the settings for the adapter, i.e.
-          -- runner = "pytest",
-          -- python = ".venv/bin/python",
+          runner = "pytest",
+          python = vim.g["python3_host_prog"],
         },
       },
     },
   },
   {
     "mfussenegger/nvim-dap",
-    lazy = true,
     optional = true,
     dependencies = {
       {
@@ -72,8 +63,6 @@ return {
           { "<leader>dPt", function() require('dap-python').test_method() end, desc = "Debug Method", ft = "python" },
           { "<leader>dPc", function() require('dap-python').test_class() end, desc = "Debug Class", ft = "python" },
         },
-        -- TODO: update to provide more options for finding the desired version
-        -- of python
         config = function()
           local path = require("mason-registry").get_package("debugpy"):get_install_path()
           require("dap-python").setup(path .. "/venv/bin/python")
@@ -83,7 +72,6 @@ return {
   },
   {
     "linux-cultist/venv-selector.nvim",
-    lazy = true,
     cmd = "VenvSelect",
     opts = function(_, opts)
       if require("az.utils").has("nvim-dap-python") then
@@ -101,3 +89,5 @@ return {
     keys = { { "<leader>cv", "<cmd>:VenvSelect<cr>", desc = "Select VirtualEnv" } },
   },
 }
+
+return M
