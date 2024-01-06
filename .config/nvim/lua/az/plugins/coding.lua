@@ -8,9 +8,17 @@
 --]]
 local M = {
   {
+    -- A better annotation generator. Supports multiple languages and annotation conventions.
     "danymat/neogen",
     dependencies = "nvim-treesitter/nvim-treesitter",
-    config = true,
+    config = function()
+      require("neogen").setup({
+        enable = true,
+      })
+      require("neogen").generate()
+      local opts = { noremap = true, silent = true }
+      vim.api.nvim_set_keymap("n", "<Leader>nf", ":lua require('neogen').generate()<CR>", opts)
+    end,
     -- Uncomment next line if you want to follow only stable versions
     -- version = "*"
   },
@@ -29,50 +37,75 @@ local M = {
           -- Conform will run multiple formatters sequentially
           python = { "isort", "black" },
         },
-        format_on_save = {
-          -- These options will be passed to conform.format()
-          timeout_ms = 300,
-          lsp_fallback = true,
-        },
+        format_on_save = function(bufnr)
+          -- Disable with a global or buffer-local variable
+          if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+            return
+          end
+          return { timeout_ms = 500, lsp_fallback = true }
+        end,
       })
+
+      -- TODO: Need to clean this up to encompass more disabling of auto features
+      -- when working on legacy code that team members/project leads don't want changed.
+      vim.api.nvim_create_user_command("FormatDisable", function(args)
+        if args.bang then
+          -- FormatDisable! will disable formatting just for this buffer
+          vim.b.disable_autoformat = true
+        else
+          vim.g.disable_autoformat = true
+        end
+      end, {
+        desc = "Disable autoformat-on-save",
+        bang = true,
+      })
+      vim.api.nvim_create_user_command("FormatEnable", function()
+        vim.b.disable_autoformat = false
+        vim.g.disable_autoformat = false
+      end, {
+        desc = "Re-enable autoformat-on-save",
+      })
+      local opts = { noremap = true, silent = true }
+      vim.api.nvim_set_keymap("n", "<Leader>ua", ":FormatDisable<CR>", opts)
+      vim.api.nvim_set_keymap("n", "<Leader>uA", ":FormatEnable<CR>", opts)
     end,
   },
   -- snippets
-  {
-    "L3MON4D3/LuaSnip",
-    build = (not jit.os:find("Windows"))
-        and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
-      or nil,
-    dependencies = {
-      "rafamadriz/friendly-snippets",
-      config = function()
-        require("luasnip.loaders.from_vscode").lazy_load()
-      end,
-    },
-    opts = {
-      history = true,
-      delete_check_events = "TextChanged",
-    },
-    -- stylua: ignore
-    keys = {
-      {
-        "<tab>",
-        function()
-          return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
-        end,
-        expr = true, silent = true, mode = "i",
-      },
-      { "<tab>", function() require("luasnip").jump(1) end, mode = "s" },
-      { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
-    },
-  },
+  -- {
+  --   "L3MON4D3/LuaSnip",
+  --   build = (not jit.os:find("Windows"))
+  --       and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
+  --     or nil,
+  --   dependencies = {
+  --     "rafamadriz/friendly-snippets",
+  --     config = function()
+  --       require("luasnip.loaders.from_vscode").lazy_load()
+  --     end,
+  --   },
+  --   opts = {
+  --     history = true,
+  --     delete_check_events = "TextChanged",
+  --   },
+  --   -- stylua: ignore
+  --   keys = {
+  --     {
+  --       "<tab>",
+  --       function()
+  --         return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
+  --       end,
+  --       expr = true, silent = true, mode = "i",
+  --     },
+  --     { "<tab>", function() require("luasnip").jump(1) end, mode = "s" },
+  --     { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
+  --   },
+  -- },
 
-  {
-    -- source for file system paths
-    "petertriho/cmp-git",
-    lazy = true,
-    opts = {},
-  },
+  -- {
+  --   -- source for file system paths
+  --   "petertriho/cmp-git",
+  --   lazy = true,
+  --   opts = {},
+  -- },
   -- auto completion
   {
     "hrsh7th/nvim-cmp",
@@ -80,14 +113,15 @@ local M = {
     event = "InsertEnter",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lua",
       "nvim-lua/plenary.nvim",
       "hrsh7th/cmp-buffer", -- source for text in buffer
       "hrsh7th/cmp-path", -- source for file system paths
-      "petertriho/cmp-git", -- source for file system paths
       "L3MON4D3/LuaSnip", -- snippet engine
       "saadparwaiz1/cmp_luasnip", -- for autocompletion
-      "rafamadriz/friendly-snippets", -- useful snippets
-      "onsails/lspkind.nvim", -- vs-code like pictograms
+      -- "petertriho/cmp-git", --
+      -- "rafamadriz/friendly-snippets", -- useful snippets
+      -- "onsails/lspkind.nvim", -- vs-code like pictograms
     },
     opts = function()
       vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
@@ -95,8 +129,8 @@ local M = {
       local defaults = require("cmp.config.default")()
       return {
         completion = {
-          completeopt = "menu,menuone,noinsert",
-          -- TODO: completeopt = "menu,menuone,preview,noselect",
+          --completeopt = "menu,menuone,noinsert",
+          completeopt = "menu,menuone,preview,noselect",
         },
         snippet = {
           expand = function(args)
@@ -124,11 +158,12 @@ local M = {
         }),
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
+          { name = "nvim_lua" },
           { name = "luasnip" },
-          { name = "path" },
-          { name = "cmp_git" }, -- gitcommit
+          -- { name = "cmp_git" }, -- gitcommit
         }, {
           { name = "buffer" },
+          { name = "path" },
         }),
         formatting = {
           format = function(_, item)
