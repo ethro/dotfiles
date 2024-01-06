@@ -20,7 +20,7 @@ return {
   -- },
   {
     "mfussenegger/nvim-lint",
-    lazy = false,
+    event = "VeryLazy",
     optional = true,
     opts = {
       linters_by_ft = {
@@ -47,8 +47,7 @@ return {
   },
   {
     "Civitasv/cmake-tools.nvim",
-    lazy = false,
+    event = "VeryLazy",
     opts = {},
-    -- event = "LazyFile",
   },
 }

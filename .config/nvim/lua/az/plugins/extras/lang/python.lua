@@ -9,7 +9,6 @@ local M = {
   },
   {
     "neovim/nvim-lspconfig",
-
     opts = {
       servers = {
         pylsp = {
@@ -29,6 +28,8 @@ local M = {
   },
   {
     "nvim-neotest/neotest",
+    -- event = "VeryLazy",
+    lazy = true,
     optional = true,
     dependencies = {
       "nvim-neotest/neotest-python",
@@ -45,6 +46,7 @@ local M = {
   },
   {
     "mfussenegger/nvim-dap",
+    event = "VeryLazy",
     optional = true,
     dependencies = {
       {
@@ -72,6 +74,7 @@ local M = {
   },
   {
     "linux-cultist/venv-selector.nvim",
+    event = "VeryLazy",
     cmd = "VenvSelect",
     opts = function(_, opts)
       if require("az.utils").has("nvim-dap-python") then

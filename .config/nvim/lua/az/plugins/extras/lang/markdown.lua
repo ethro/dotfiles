@@ -28,7 +28,7 @@ return {
   -- },
   {
     "mfussenegger/nvim-lint",
-    lazy = false,
+    event = "VeryLazy",
     optional = true,
     opts = {
       linters_by_ft = {
@@ -49,7 +49,7 @@ return {
   -- Markdown preview
   {
     "iamcco/markdown-preview.nvim",
-    lazy = false,
+    event = "VeryLazy",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
     build = function()
       vim.fn["mkdp#util#install"]()
@@ -69,7 +69,7 @@ return {
 
   {
     "lukas-reineke/headlines.nvim",
-    lazy = false,
+    event = "VeryLazy",
     opts = function()
       local opts = {}
       for _, ft in ipairs({ "markdown", "norg", "rmd", "org" }) do

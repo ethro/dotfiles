@@ -28,7 +28,7 @@ return {
   -- },
   {
     "mfussenegger/nvim-lint",
-    lazy = false,
+    event = "VeryLazy",
     optional = true,
     opts = {
       linters_by_ft = {
@@ -38,7 +38,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    lazy = false,
+    event = "VeryLazy",
     opts = {
       servers = {
         dockerls = {},

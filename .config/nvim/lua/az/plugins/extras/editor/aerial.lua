@@ -6,7 +6,7 @@ local M = {
   {
     "stevearc/aerial.nvim",
     -- TODO: event = "LazyFile",
-    lazy = false,
+    event = "VeryLazy",
     opts = function()
       local icons = vim.deepcopy(Config.icons.kinds)
 

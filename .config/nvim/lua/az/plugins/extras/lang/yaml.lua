@@ -14,14 +14,14 @@ return {
   -- yaml schema support
   {
     "b0o/SchemaStore.nvim",
-    lazy = false,
+    event = "VeryLazy",
     version = false, -- last release is way too old
   },
 
   -- correctly setup lspconfig
   {
     "neovim/nvim-lspconfig",
-    lazy = false,
+    event = "VeryLazy",
     opts = {
       -- make sure mason installs the server
       servers = {

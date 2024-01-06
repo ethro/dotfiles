@@ -5,12 +5,14 @@ local M = {
     -- virtual - draws the blame info on the far right of the buffer
     -- window  - opens a new buffer to the left and shows the blame info
     "FabijanZulj/blame.nvim",
+    event = "VeryLazy",
   },
   -- git signs highlights text that has changed since the list
   -- git commit, and also lets you interactively stage & unstage
   -- hunks in a commit.
   {
     "lewis6991/gitsigns.nvim",
+    event = "VeryLazy",
     opts = {
       signs = {
         add = { text = "▎" },
@@ -43,7 +45,6 @@ local M = {
       end,
     },
   },
-
 }
 
 return M

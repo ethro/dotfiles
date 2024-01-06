@@ -14,12 +14,14 @@ local M = {
     -- https://github.com/raafatturki/hex.nvim
     -- Open binary files in hex view
     "raafatturki/hex.nvim",
+    event = "VeryLazy",
     opts = {},
   },
   {
     -- Easy configuration for trimming trailing whitespace and lines
     -- https://github.com/cappyzawa/trim.nvim
     "cappyzawa/trim.nvim",
+    lazy = true,
     config = function()
       local trim = require("trim")
 
@@ -40,6 +42,7 @@ local M = {
   -- search/replace in multiple files
   {
     "nvim-pack/nvim-spectre",
+    event = "VeryLazy",
     build = false,
     cmd = "Spectre",
     opts = { open_cmd = "noswapfile vnew" },
@@ -225,6 +228,7 @@ local M = {
   -- instances.
   {
     "RRethy/vim-illuminate",
+    event = "VeryLazy",
     opts = {
       delay = 200,
       large_file_cutoff = 2000,
@@ -262,6 +266,7 @@ local M = {
   -- better diagnostics list and others
   {
     "folke/trouble.nvim",
+    event = "VeryLazy",
     cmd = { "TroubleToggle", "Trouble" },
     opts = { use_diagnostic_signs = true },
     dependencies = {
@@ -307,6 +312,7 @@ local M = {
   -- in your project and loads them into a browsable list.
   {
     "folke/todo-comments.nvim",
+    event = "VeryLazy",
     cmd = { "TodoTrouble", "TodoTelescope" },
     -- event = "LazyFile",
     config = true,

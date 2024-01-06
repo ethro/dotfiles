@@ -334,8 +334,7 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 5
 #exec --no-startup-id sh ~/.screenlayout/tv_laptop.sh
 #exec --no-startup-id feh --bg-fill ~/.config/bgs/wallpaper12.png &
 exec --no-startup-id source ~/.fehbg
-exec --no-startup-id feh --bg-fill --randomize ~/.config/bgs/ &
-#exec --no-startup-id feh --randomize --bg-fill ~/.config/bgs
+exec --no-startup-id feh --bg-fill --randomize ~/.config/wallpapers/ &
 exec --no-startup-id sh ~/.config/polybar/launch.sh &
 exec_always --no-startup-id xmodmap ~/.Xmodmap &
 exec --no-startup-id picom -b
@@ -354,7 +353,6 @@ exec --no-startup-id dex-autostart --autostart --environment i3
 # Lock screen
 #bindsym $mod+Ctrl+l exec --no-startup-id i3lock -i ~/.config/bgs/wallpaper12.jpg
 exec --no-startup-id betterlockscreen -w dim
-exec --no-startup-id source ~/.fehbg
 bindsym $alt+l exec betterlockscreen -l
 # bindsym $alt+l exec --no-startup-id loginctl lock-session
 

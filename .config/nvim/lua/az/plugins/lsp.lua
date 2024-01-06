@@ -43,7 +43,6 @@ local M = {
         timeout_ms = nil,
       },
       -- LSP Server Settings
-      ---@type lspconfig.options
       servers = {
         lua_ls = {
           -- mason = false, -- set to false if you don't want this server to be installed with mason
