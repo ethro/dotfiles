@@ -1,4 +1,9 @@
 local kmap = vim.keymap.set
+
+local function az_dbg()
+  print("az_dbg")
+end
+
 local function print_keys()
   local keys = {}
   local n = 0
@@ -17,8 +22,8 @@ end
 
 local M = {
   kmap("n", "<leader>dz", function()
-    print_keys()
-  end, { desc = "debug zettlekasten" })
+    az_dbg()
+  end, { desc = "az debug" }),
 }
 
 return M

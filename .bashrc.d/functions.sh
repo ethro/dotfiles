@@ -254,3 +254,14 @@ _g++_defines() {
 _clang++_defines() {
   echo | clang++ -dM -E -x c++ -
 }
+
+gen_editor_cfg() {
+  cat << EOF > .editorconfig
+root = true
+
+[*.{c,cpp,h,hpp}]
+tab_width = 4
+indent_size = 4
+auto_format = false
+EOF
+}
