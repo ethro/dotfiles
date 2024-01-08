@@ -1,6 +1,4 @@
 #!/bin/bash
-#
-
 
 # Append to the history file, don't overwrite it
 shopt -s histappend
@@ -32,4 +30,4 @@ export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 #:J:#shopt -s checkwinsize
 
 # Prepend cd to directory names automatically
-shopt -s autocd 2> /dev/null
+shopt -s autocd 2>/dev/null

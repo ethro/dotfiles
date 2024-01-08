@@ -25,5 +25,6 @@ cursor:
 # Live config reload (changes require restart)
 live_config_reload: true
 
+
 import:
   - ~/.config/alacritty/themes/themes/jellybeans.yaml

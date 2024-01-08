@@ -1,260 +1,378 @@
 txt2pdf() {
-	input_file=$1
-	filename="${input_file%.*}"
+  input_file=$1
+  filename="${input_file%.*}"
 
-	enscript "$input_file" --output=- | ps2pdf - >"$filename.pdf"
+  enscript "$input_file" --output=- | ps2pdf - >"$filename.pdf"
 }
 
+#######################################
+# Traverse a directory, find git repos and submodules and perform the git action on each.
+# Arguments: Any git action to perform on any git repo/submodule discovered
+#######################################
 gr() {
   _dir_name=$(dirname \"{}\")
-	find . -name .git -exec sh -c "cd \"\$_dir_name\"; printf \"|----- \"; pwd; $*;" \;
+  find . -name .git -exec sh -c "cd \"\$_dir_name\"; printf \"|----- \"; pwd; $*;" \;
 }
 
+#######################################
+# Traverse a directory, find git repos and perform the git action on each.
+# Arguments: Any git action to perform on any git repo/submodule discovered
+#######################################
 grg() {
   _dir_name=$(dirname \"{}\")
-	find . -type d -name .git -exec sh -c "cd \"\$_dir_name\"; printf \"|----- \"; pwd; $*;" \;
+  find . -type d -name .git -exec sh -c "cd \"\$_dir_name\"; printf \"|----- \"; pwd; $*;" \;
 }
 
+#######################################
+# Traverse a directory, find git submodules and perform the git action on each.
+# Arguments: Any git action to perform on any git repo/submodule discovered
+#######################################
 grs() {
   _dir_name=$(dirname \"{}\")
-	find . -type f -name .git -exec sh -c "cd \"\$_dir_name\"; printf \"|----- \"; pwd; $*;" \;
+  find . -type f -name .git -exec sh -c "cd \"\$_dir_name\"; printf \"|----- \"; pwd; $*;" \;
 }
 
-#function dots {
-#   git --git-dir=$HOME/.dotfiles --work-tree=$HOME $@
-#}
-
+#######################################
+# Traverse a directory, find git repos and get their current status
+#######################################
 gsls() {
   _dir_name=$(dirname \"{}\")
-	find . -type d -name .git -exec sh -c "cd \"\$_dir_name\"; printf \"|----- \"; pwd; git status -s -b --ahead-behind" \;
+  find . -type d -name .git -exec sh -c "cd \"\$_dir_name\"; printf \"|----- \"; pwd; git status -s -b --ahead-behind" \;
 }
 
+#######################################
+# Traverse a directory, find git repos, fetch from the remote and get their current status
+#######################################
 gfls() {
   _dir_name=$(dirname \"{}\")
-	find . -type d -name .git -exec sh -c "cd \"\$_dir_name\"; printf \"|----- \"; pwd; git fetch; git status -s -b --ahead-behind" \;
+  find . -type d -name .git -exec sh -c "cd \"\$_dir_name\"; printf \"|----- \"; pwd; git fetch; git status -s -b --ahead-behind" \;
 }
 
+#######################################
+# Traverse a directory, find git repos, tag each and push to origin
+# Arguments:
+#   The tag to use on each repo
+#######################################
 gat() {
   _dir_name=$(dirname \"{}\")
-	find . -type d -name .git -exec sh -c "cd \"\$_dir_name\"; printf \"|----- \"; pwd; git tag $1; git push origin $1" \;
+  find . -type d -name .git -exec sh -c "cd \"\$_dir_name\"; printf \"|----- \"; pwd; git tag $1; git push origin $1" \;
 }
 
+#######################################
+# Traverse a directory, find git repose, create and annotated tag and push to origin.
+# Arguments:
+#   The tag to use on each repo
+#   The annotation for the tag
+#######################################
 gatm() {
   _dir_name=$(dirname \"{}\")
-	find . -type d -name .git -exec sh -c "cd \"\$_dir_name\"; printf \"|----- \"; pwd; git tag -a -m \"$2\" $1; git push origin $1" \;
+  find . -type d -name .git -exec sh -c "cd \"\$_dir_name\"; printf \"|----- \"; pwd; git tag -a -m \"$2\" $1; git push origin $1" \;
 }
 
+#######################################
+# Make a copy of all modified and untracked files in a git repository and maintain directory structure.
+#######################################
 cpMods() {
-	mkdir -p ../mods
-	cp --parents "$(git ls-files --modified --others --exclude-standard)" ../mods
+  mkdir -p ../mods
+  cp --parents "$(git ls-files --modified --others --exclude-standard)" ../mods
 }
 
+#######################################
+# Make a copy of all modified tracked files in a git repository and maintain the directory structure.
+#######################################
 cpOnlyMods() {
-	mkdir -p ../onlymods
-	cp --parents "$(git ls-files --modified)" ../onlymods
+  mkdir -p ../onlymods
+  cp --parents "$(git ls-files --modified)" ../onlymods
 }
 
+#######################################
+# For the given filepath, find any files of the same name from the current working directory and
+# execute vimdiff on the original file and any discovered files of the same name.
+# Arguments:
+#   Original file path to be diff'd
+#######################################
 findDiff() {
-	fileToDiffPath=$1
-	fileToDiff=$(basename "$fileToDiffPath")
+  fileToDiffPath=$1
+  fileToDiff=$(basename "$fileToDiffPath")
 
-	echo "$fileToDiff"
+  echo "$fileToDiff"
 
-	find . -type f -name "$fileToDiff" -exec vimdiff "$fileToDiffPath" "{}" \;
+  find . -type f -name "$fileToDiff" -exec vimdiff "$fileToDiffPath" "{}" \;
 }
 
-brightness() {
-	max_brightness=$(cat "/sys/class/backlight/intel_backlight/max_brightness")
-	scale=$(expr "$max_brightness" \* "$1")
-	set_brightness=$(expr $scale / 100)
-	echo $set_brightness >"/sys/class/backlight/intel_backlight/brightness"
-}
-
-utared() {
-	gpg -d "$1" | tar xjvf -
-}
-
-tared() {
-	local _dir_name=$(echo "$1" | sed 's:/*$::')
-	echo $_dir_name
-	local _GPG_TTY=$GPG_TTY
-	export GPG_TTY=$(tty)
-	if [ -d "$_dir_name" ]; then
-		tar cjvpf - "$_dir_name" | gpg --symmetric --cipher-algo aes256 -o "$_dir_name.tar.bz2.gpg"
-	else
-		echo "Unable to find [$_dir_name]"
-	fi
-	export GPG_TTY=$_GPG_TTY
-}
-
+#######################################
+# Decrypt and extract the encrypted bz2 tarball into a directory with the name of the tarball
+# Arguments:
+#   The tarball to extract
+#######################################
 utarefd() {
-	local _dir_name=$(echo "$1" | cut -f1 -d".")
-	mkdir -p "$_dir_name"
-	gpg -d "$1" | tar xjvf - -C "$_dir_name"
+  local _dir_name=$(echo "$1" | cut -f1 -d".")
+  mkdir -p "$_dir_name"
+  gpg -d "$1" | tar xjvf - -C "$_dir_name"
 }
 
+#######################################
+# Decrypt and extract an encrypted and bz2 compressed tarball
+# Arguments:
+#   The signed and compressed tarball.
+#######################################
 utaref() {
-	gpg -d "$1" | tar xjvf -
+  gpg -d "$1" | tar xjvf -
 }
 
-tarel() {
-	local _tar_name=$1
-	local _GPG_TTY=$GPG_TTY
-	export GPG_TTY=$(tty)
-	gpg -d $_tar_name | tar -tjf -
-	export GPG_TTY=$_GPG_TTY
+#######################################
+# Decrypt and list the contents of the encrypted bz2 tarball
+# Arguments:
+#   The encrypted bz2 compressed tarball
+#######################################
+utarel() {
+  local _tar_name=$1
+  local _GPG_TTY=$GPG_TTY
+  export GPG_TTY=$(tty)
+  gpg -d $_tar_name | tar -tjf -
+  export GPG_TTY=$_GPG_TTY
 }
 
+#######################################
+# Add the provided directory to a bz2 compressed tarball and encrypt it with gpg.
+# Arguments:
+#   The directory to compress into an encrypted bz2 tarball
+#######################################
+tared() {
+  local _dir_name=$(echo "$1" | sed 's:/*$::')
+  echo "$_dir_name"
+  local _GPG_TTY=$GPG_TTY
+  export GPG_TTY=$(tty)
+  if [ -d "$_dir_name" ]; then
+    tar cjvpf - "$_dir_name" | gpg --symmetric --cipher-algo aes256 -o "$_dir_name.tar.bz2.gpg"
+  else
+    echo "Unable to find [$_dir_name]"
+  fi
+  export GPG_TTY=$_GPG_TTY
+}
+
+#######################################
+# Add the provided directory to a bz2 encrypted tarball
+#   Preserve permissions
+# Arguments:
+#   Name for the tarball
+#   File(s) to add to the tarball
+#######################################
 taref() {
-	local _tar_name=$1
-	shift
-	local _args=$*
-	local _GPG_TTY=$GPG_TTY
-	export GPG_TTY=$(tty)
-	tar cjvpf - $_args | gpg --symmetric --cipher-algo aes256 -o "$_tar_name.tar.bz2.gpg"
-	export GPG_TTY=$_GPG_TTY
+  local _tar_name=$1
+  shift
+  local _args=$*
+  local _GPG_TTY=$GPG_TTY
+  export GPG_TTY=$(tty)
+  tar cjvpf - $_args | gpg --symmetric --cipher-algo aes256 -o "$_tar_name.tar.bz2.gpg"
+  export GPG_TTY=$_GPG_TTY
 }
 
-# ------------------------------------------------------------------------------
-# open file from ripgrep/fzf
+#######################################
+# Use ripgrep and pass results to fzf.  From fzf, if a file was selected, get the
+# filepath and line number for the selection.  Open the file with nvim at the
+# discovered line.
+# Arguments:
+#   The pattern to look for
+#   The path to start looking for the pattern
+#######################################
 rvim() {
-	filepath_line="$(rg -n $2 $1 | fzf)"
-	echo $filepath_line
-	filepath=$(echo "$filepath_line" | cut -d":" -f1)
-	line=$(echo "$filepath_line" | cut -d":" -f2)
+  filepath_line="$(rg -n "$1" "$2" | fzf)"
+  echo "$filepath_line"
+  filepath=$(echo "$filepath_line" | cut -d":" -f1)
+  line=$(echo "$filepath_line" | cut -d":" -f2)
 
-	if ! [ "$filepath" == "" ] && ! [ "$line" == "" ]; then
-		echo nvim +$line "$filepath"
-		nvim +$line "$filepath"
-	fi
+  if ! [ "$filepath" == "" ] && ! [ "$line" == "" ]; then
+    echo nvim +"$line" "$filepath"
+    nvim +"$line" "$filepath"
+  fi
 }
 
+#######################################
+# Create a python3 virtual env and activate the venv.
+# Arguments:
+#   Name for the venv
+#######################################
 pv() {
-	python3 -m venv ".venv_$1"
-	source ".venv_$1/bin/activate"
+  python3 -m venv ".venv_$1"
+  source ".venv_$1/bin/activate"
 }
 
+#######################################
+# Create a python3 virtual env, activate the venv and install pkgs from the 
+# requirements.txt file
+# Arguments:
+#   Name for the venv
+#######################################
 pvr() {
-	python3 -m venv ".venv_$1"
-	source ".venv_$1/bin/activate"
-	pip install -r requirements.txt
+  python3 -m venv ".venv_$1"
+  source ".venv_$1/bin/activate"
+  pip install -r requirements.txt
 }
 
+#######################################
+# Create a python3 virtual env, activate the venv and install pkgs from the
+# pyproject.toml file
+# Arguments:
+#   Name for the venv
+#######################################
 pvp() {
-	python3 -m venv ".venv_$1"
-	source ".venv_$1/bin/activate"
-	pip install pyproject.toml
+  python3 -m venv ".venv_$1"
+  source ".venv_$1/bin/activate"
+  pip install pyproject.toml
 }
 
+#######################################
+# Attempt to transfer the default id_rsa.pub to the hosts authorized_keys
+# Arguments:
+#   Alias for the remote host - the IP, or hostname
+#   The username on the remote host to transfer the key to
+#######################################
 ssh_tx_pub() {
-	# Attempt to transfer the default id_rsa.pub to the hosts authorized_keys
-	_PUBLIC_KEY=~/.ssh/id_rsa.pub
-	_HOST_ALIAS=$1
-	_HOST_USERNAME=$2
-	if [ -z ${_HOST_USERNAME} ]; then
-		_HOST_USERNAME=$USER
-	fi
-	if [ -e $_PUBLIC_KEY ]; then
-		cat $_PUBLIC_KEY | ssh -e none $_HOST_USERNAME@$_HOST_ALIAS 'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys'
-	fi
+  _PUBLIC_KEY=~/.ssh/id_rsa.pub
+  _HOST_ALIAS=$1
+  _HOST_USERNAME=$2
+  if [ -z "${_HOST_USERNAME}" ]; then
+    _HOST_USERNAME=$USER
+  fi
+  if [ -e $_PUBLIC_KEY ]; then
+    cat $_PUBLIC_KEY | ssh -e none "$_HOST_USERNAME"@"$_HOST_ALIAS" 'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys'
+  fi
 }
 
+#######################################
+# Run docker-compose for the indicated target
+# Arguments:
+#   The docker target to run
+#######################################
 dock() {
-	docker-compose run --rm $1
+  docker-compose run --rm "$1"
 }
 
+#######################################
+# Retrieve a tracked file from a gitlab server.
+# Arguments:
+#   URL to the raw file location
+#######################################
 get_getlab_file() {
-	curl --header "PRIVATE-TOKEN: $GITLAB_PRIVATE_TOKEN" "$1"
+  curl --header "PRIVATE-TOKEN: $GITLAB_PRIVATE_TOKEN" "$1"
 }
 
-ddiff() {
-	echo
-}
-
+#######################################
+# Back up neovim configuration locaitons
+#######################################
 ncfg_bak() {
-	# required
-	mv ~/.config/nvim{,.bak}
+  # required
+  mv ~/.config/nvim{,.bak}
 
-	# optional but recommended
-	mv ~/.local/share/nvim{,.bak}
-	mv ~/.local/state/nvim{,.bak}
-	mv ~/.cache/nvim{,.bak}
+  # optional but recommended
+  mv ~/.local/share/nvim{,.bak}
+  mv ~/.local/state/nvim{,.bak}
+  mv ~/.cache/nvim{,.bak}
 }
 
+#######################################
+# Remoe back up neovim configuration locaitons
+#######################################
 ncfg_rmbak() {
-	# required
-	rm -rf ~/.config/nvim.bak
+  # required
+  rm -rf ~/.config/nvim.bak
 
-	# optional but recommended
-	rm -rf ~/.local/share/nvim.bak
-	rm -rf ~/.local/state/nvim.bak
-	rm -rf ~/.cache/nvim.bak
+  # optional but recommended
+  rm -rf ~/.local/share/nvim.bak
+  rm -rf ~/.local/state/nvim.bak
+  rm -rf ~/.cache/nvim.bak
 }
 
+#######################################
+# Remove neovim configuration locations and move backups back to expected locations
+#######################################
 ncfg_revert() {
-	# required
-	rm -rf ~/.config/nvim
-	mv ~/.config/nvim{.bak,}
+  # required
+  rm -rf ~/.config/nvim
+  mv ~/.config/nvim{.bak,}
 
-	# optional but recommended
-	rm -rf ~/.local/share/nvim
-	mv ~/.local/share/nvim{.bak,}
+  # optional but recommended
+  rm -rf ~/.local/share/nvim
+  mv ~/.local/share/nvim{.bak,}
 
-	rm -rf ~/.local/state/nvim
-	mv ~/.local/state/nvim{.bak,}
+  rm -rf ~/.local/state/nvim
+  mv ~/.local/state/nvim{.bak,}
 
-	rm -rf ~/.cache/nvim
-	mv ~/.cache/nvim{.bak,}
+  rm -rf ~/.cache/nvim
+  mv ~/.cache/nvim{.bak,}
 }
 
+#######################################
+# Remove neovim configuration locations
+#######################################
 ncfg_rm() {
-	# required
-	rm -rf ~/.config/nvim
+  # required
+  rm -rf ~/.config/nvim
 
-	# optional but recommended
-	rm -rf ~/.local/share/nvim
+  # optional but recommended
+  rm -rf ~/.local/share/nvim
 
-	rm -rf ~/.local/state/nvim
+  rm -rf ~/.local/state/nvim
 
-	rm -rf ~/.cache/nvim
+  rm -rf ~/.cache/nvim
 }
 
+#######################################
+# Create a gz tarball of the neovim configuraiton locations.
+# Arguments:
+#######################################
 ncfg_tarz() {
   pushd "$HOME" || return
   tar czf nvim_cfg.tar.gz .config/nvim .local/share/nvim .local/state/nvim .cache/nvim
   popd || return
 }
 
+#######################################
+# Create a tarball of all dotfiles
+# Arguments:
+#######################################
 dots_tarz() {
   pushd "$HOME" || return
   _yadm_files=$(yadm ls-files)
-  tar czf dots.tar.gz $_yadm_files ~/.local/share/yadm/
+  tar czf dots.tar.gz "$_yadm_files" ~/.local/share/yadm/
   popd || return
 }
 
+#######################################
+# Retreive a local copy of all remote branches.
+#######################################
 gitem() {
-	git branch -r | grep -v '\->' | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" | while read remote; do git branch --track "${remote#origin/}" "$remote"; done
+  git branch -r | grep -v '\->' | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" | while read remote; do git branch --track "${remote#origin/}" "$remote"; done
 }
+#######################################
+# Retreive a local copy of all remote branches.
+#######################################
 gitem2() {
   for remote in $(git branch -r); do git branch --track ${remote@origin/} $remote; done
 }
 
+
+#######################################
+# Convenience functions to remember how to get pre-defined compiler macros
+#######################################
 _gcc_defines() {
   echo | gcc -dM -E -
 }
-
 _clang_defines() {
   echo | clang -dM -E -
 }
-
 _g++_defines() {
   echo | g++ -dM -E -x c++ -
 }
-
 _clang++_defines() {
   echo | clang++ -dM -E -x c++ -
 }
 
+
+#######################################
+# Create a generic c editorconfig file at the current working directory
+#######################################
 gen_editor_cfg() {
   cat << EOF > .editorconfig
 root = true
