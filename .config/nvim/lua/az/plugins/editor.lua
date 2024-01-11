@@ -325,6 +325,7 @@ local M = {
       { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
       { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
     },
+    opts = {},
   },
   {
     "tamago324/lir.nvim",
@@ -403,7 +404,9 @@ local M = {
       })
 
       local map = vim.keymap.set
-      map("n", "<leader>pv", ":lua require('lir.float').toggle()<CR>", { desc = "[e]xplorer [t]oggle" })
+      map("n", "<leader>pf", ":lua require('lir.float').toggle()<CR>", { desc = "[e]xplorer [t]oggle" })
+      map("n", "<leader>pv", ":vsplit %<CR><cmd>execute 'e ' .. expand('%:p:h')<CR>", { desc = "[e]xplorer [t]oggle" })
+      map("n", "<leader>pt", ":tabe %<CR><cmd>execute 'e ' .. expand('%:p:h')<CR>", { desc = "[e]xplorer [t]oggle" })
       map("n", "<leader>l", "<cmd>execute 'e ' .. expand('%:p:h')<CR>", { desc = "[e]xplorer cwd [f]iles" })
     end,
   },
