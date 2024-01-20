@@ -404,10 +404,11 @@ local M = {
       })
 
       local map = vim.keymap.set
-      map("n", "<leader>pf", ":lua require('lir.float').toggle()<CR>", { desc = "[e]xplorer [t]oggle" })
-      map("n", "<leader>pv", ":vsplit %<CR><cmd>execute 'e ' .. expand('%:p:h')<CR>", { desc = "[e]xplorer [t]oggle" })
-      map("n", "<leader>pt", ":tabe %<CR><cmd>execute 'e ' .. expand('%:p:h')<CR>", { desc = "[e]xplorer [t]oggle" })
-      map("n", "<leader>l", "<cmd>execute 'e ' .. expand('%:p:h')<CR>", { desc = "[e]xplorer cwd [f]iles" })
+      map("n", "<leader>pf", ":lua require('lir.float').toggle()<CR>", { desc = "lir floating window" })
+      map("n", "<leader>pv", ":vsplit %<CR><cmd>execute 'e ' .. expand('%:p:h')<CR>", { desc = "lir vsplit" })
+      map("n", "<leader>ps", ":split %<CR><cmd>execute 'e ' .. expand('%:p:h')<CR>", { desc = "lir split" })
+      map("n", "<leader>pt", ":tabe %<CR><cmd>execute 'e ' .. expand('%:p:h')<CR>", { desc = "lir tabe" })
+      map("n", "<leader>l", "<cmd>execute 'e ' .. expand('%:p:h')<CR>", { desc = "lir cwd buffer" })
     end,
   },
   {

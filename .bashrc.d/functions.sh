@@ -334,8 +334,8 @@ ncfg_tarz() {
 #######################################
 dots_tarz() {
   pushd "$HOME" || return
-  _yadm_files=$(yadm ls-files)
-  tar czf dots.tar.gz "$_yadm_files" ~/.local/share/yadm/
+  _yadm_files=$(yadm ls-files | xargs)
+  tar czf dots.tar.gz $_yadm_files .local/share/yadm/
   popd || return
 }
 

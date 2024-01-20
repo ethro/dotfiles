@@ -74,7 +74,7 @@ _git_info() {
 _myprompt() {
   local ret_status="$([ $? -eq 0 ] && echo -e "$STATUS_THEME_PROMPT_OK" || echo -e "$STATUS_THEME_PROMPT_BAD")"
   # PS1="${blue}\$(_dirtrim \"\w\") $(_git_info)\n${ret_status}"
-  PS1="${orange}\$(_dirtrim \"\w\") ${ret_status}"
+  PS1="${light_green}\$HOSTNAME ${orange}\$(_dirtrim \"\w\") ${ret_status}"
 }
 
 export PROMPT_COMMAND=_myprompt
