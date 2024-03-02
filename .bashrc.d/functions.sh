@@ -5,6 +5,10 @@ txt2pdf() {
   enscript "$input_file" --output=- | ps2pdf - >"$filename.pdf"
 }
 
+gcr() {
+  git clone --recursive "$@"
+}
+
 #######################################
 # Traverse a directory, find git repos and submodules and perform the git action on each.
 # Arguments: Any git action to perform on any git repo/submodule discovered

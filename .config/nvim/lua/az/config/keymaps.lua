@@ -3,7 +3,7 @@
 local kmap = vim.keymap.set
 
 local nvim_init = "~/.config/nvim/lua/az/config/lazy.lua"
-local tmux_conf = "~/.tmux.conf"
+local tmux_conf = "~/.config/tmux/tmux.conf"
 
 kmap("n", "<leader>ev", ":tabedit" .. nvim_init .. "<CR>", { desc = "Open nvim init.lua" })
 kmap("n", "<leader>et", ":tabedit" .. tmux_conf .. "<CR>", { desc = "Open tmux.conf" })

@@ -10,6 +10,8 @@
     stat = status -uno
     list = ls-tree -r master --name-only
 
+    subu = submodule update --init --recursive
+
     lg = lg1
     lg1 = lg1-specific --all
     lg2 = lg2-specific --all

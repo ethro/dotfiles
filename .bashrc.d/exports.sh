@@ -14,3 +14,8 @@ if [ -d ~/.pyenv ]; then
   command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
   eval "$(pyenv init -)"
 fi
+
+U_ID="$(id -u)"
+G_ID="$(id -g)"
+export U_ID
+export G_ID

@@ -6,7 +6,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
-local secs_in_week = 86400
+local secs_in_week = 604800
 
 require("lazy").setup({
   spec = {

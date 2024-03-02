@@ -37,6 +37,7 @@ alias umntsd='sudo umount /mnt/sd_card'
 alias mntcd='usrmnt /dev/sr0 /mnt/sr0'
 alias umntcd='sudo umount /mnt/sr0'
 
+# alias open='sudo cryptsetup luksOpen /dev/sdb2 secret'
 alias cryptopen='sudo cryptsetup luksOpen'
 
 alias ya='yadm'
