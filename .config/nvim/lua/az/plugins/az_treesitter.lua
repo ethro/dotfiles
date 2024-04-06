@@ -57,6 +57,7 @@ local M = {
         ensure_installed = {
           "bash",
           "c",
+          "cpp",
           "diff",
           "html",
           "javascript",
@@ -136,7 +137,7 @@ local M = {
         },
       },
     },
-  }
+  },
 }
 
 return M

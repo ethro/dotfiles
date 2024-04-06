@@ -121,7 +121,7 @@ function M.format(opts)
     if formatter.active then
       done = true
       Util.try(function()
-        print(formatter.name)
+        -- print(formatter.name)
         return formatter.format(buf)
       end, { msg = "Formatter `" .. formatter.name .. "` failed" })
     end

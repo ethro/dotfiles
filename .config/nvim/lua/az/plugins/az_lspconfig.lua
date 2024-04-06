@@ -60,6 +60,22 @@ local M = {
             },
           },
         },
+        clangd = {
+          cmd = {
+            "clangd",
+            "--background-index",
+            "--clang-tidy",
+            "--header-insertion=iwyu",
+            "--completion-style=detailed",
+            "--function-arg-placeholders",
+            "--fallback-style=Microsoft",
+          },
+          init_options = {
+            usePlaceholders = true,
+            completeUnimported = true,
+            clangdFileStatus = true,
+          },
+        },
       },
       -- you can do any additional lsp server setup here
       -- return true if you don't want this server to be setup with lspconfig
@@ -116,11 +132,11 @@ local M = {
       local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
 
       if opts.inlay_hints.enabled and inlay_hint then
-        --  Util.lsp.on_attach(function(client, buffer)
-        --    if client.supports_method("textDocument/inlayHint") then
-        --      inlay_hint(buffer, true)
-        --    end
-        --  end)
+        Util.lsp.on_attach(function(client, buffer)
+          if client.supports_method("textDocument/inlayHint") then
+            inlay_hint(buffer, true)
+          end
+        end)
       end
 
       if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
@@ -188,13 +204,13 @@ local M = {
         mlsp.setup({ ensure_installed = ensure_installed, handlers = { setup } })
       end
 
-      -- if Util.lsp.get_config("denols") and Util.lsp.get_config("tsserver") then
-      --   local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
-      --   Util.lsp.disable("tsserver", is_deno)
-      --   Util.lsp.disable("denols", function(root_dir)
-      --     return not is_deno(root_dir)
-      --   end)
-      -- end
+      if Util.lsp.get_config("denols") and Util.lsp.get_config("tsserver") then
+        local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
+        Util.lsp.disable("tsserver", is_deno)
+        Util.lsp.disable("denols", function(root_dir)
+          return not is_deno(root_dir)
+        end)
+      end
     end,
   },
 }
