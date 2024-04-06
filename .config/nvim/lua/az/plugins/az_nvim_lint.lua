@@ -1,4 +1,4 @@
-return {
+local M = {
   {
     "mfussenegger/nvim-lint",
     -- event = "LazyFile",
@@ -92,3 +92,5 @@ return {
     end,
   },
 }
+
+return M

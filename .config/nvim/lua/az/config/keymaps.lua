@@ -16,19 +16,6 @@ kmap(
   { desc = "Lsp config to buffer" }
 )
 
-local tld = require("toggle_lsp_diagnostics")
-
--- stylua: ignore start
-kmap("n", "<leader>uu", function() tld.toggle_underline() end, { desc = "Toggle LSP diag Underline" })
--- kmap("n", "<leader>tls", function() tld.toggle_signs() end, { desc = "Toggle LSP diag Signs" })
-kmap("n", "<leader>uv", function() tld.toggle_virtual_text() end, { desc = "Toggle LSP diag Virtual text" })
--- kmap("n", "<leader>tlp", function() tld.toggle_update_in_insert() end, { desc = "Toggle LSP" })
--- kmap("n", "<leader>tld", function() tld.toggle_diagnostic() end, { desc = "Toggle LSP" })
--- kmap("n", "<leader>tldd", function() tld.turn_on_diagnostics_default() end, { desc = "Toggle LSP" })
--- kmap("n", "<leader>tldo", function() tld.turn_off_diagnostics() end, { desc = "Toggle LSP" })
--- kmap("n", "<leader>tldf", function() tld.turn_on_diagnostics() end, { desc = "Toggle LSP" })
--- stylua: ignore end
-
 kmap("n", "<leader>bd", ":bd<CR>", { desc = "Buffer delete" })
 kmap({ "n", "v", "i" }, "<F1>", "<nop>", { desc = "Don't spit help at me" })
 kmap("n", "gv", ":vsplit | lua vim.lsp.buf.definition()<CR>", { desc = "Go to definition in vertical split" })
@@ -140,6 +127,7 @@ kmap("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
 -- stylua: ignore start
 
 -- toggle options
+--[[
 kmap("n", "<leader>uf", function() Util.format.toggle() end, { desc = "Toggle auto format (global)" })
 kmap("n", "<leader>uF", function() Util.format.toggle(true) end, { desc = "Toggle auto format (buffer)" })
 kmap("n", "<leader>us", function() Util.toggle("spell") end, { desc = "Toggle Spelling" })
@@ -153,6 +141,7 @@ if vim.lsp.inlay_hint then
   kmap("n", "<leader>uh", function() vim.lsp.inlay_hint(0, nil) end, { desc = "Toggle Inlay Hints" })
 end
 kmap("n", "<leader>uT", function() if vim.b.ts_highlight then vim.treesitter.stop() else vim.treesitter.start() end end, { desc = "Toggle Treesitter Highlight" })
+--]]
 
 -- lazygit
 kmap("n", "<leader>gg", function() Util.terminal({ "lazygit" }, { cwd = Util.root(), esc_esc = false, ctrl_hjkl = false }) end, { desc = "Lazygit (root dir)" })
@@ -165,11 +154,13 @@ kmap("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
 kmap("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
 
 -- floating terminal
+--[[
 local lazyterm = function() Util.terminal(nil, { cwd = Util.root() }) end
 kmap("n", "<leader>ft", lazyterm, { desc = "Terminal (root dir)" })
 kmap("n", "<leader>fT", function() Util.terminal() end, { desc = "Terminal (cwd)" })
 kmap("n", "<c-/>", lazyterm, { desc = "Terminal (root dir)" })
 kmap("n", "<c-_>", lazyterm, { desc = "which_key_ignore" })
+--]]
 
 -- Terminal Mappings
 kmap("t", "<esc><esc>", "<c-\\><c-n>", { desc = "Enter Normal Mode" })

@@ -1,7 +1,6 @@
 local Util = require("az.utils")
 
 local M = {
-  -- lspconfig
   {
     "neovim/nvim-lspconfig",
     -- event = "LazyFile",
@@ -85,7 +84,7 @@ local M = {
       -- setup autoformat
       Util.format.register(Util.lsp.formatter())
 
-      -- deprectaed options
+      -- deprecated options
       if opts.autoformat ~= nil then
         vim.g.autoformat = opts.autoformat
         Util.deprecate("nvim-lspconfig.opts.autoformat", "vim.g.autoformat")
@@ -117,11 +116,11 @@ local M = {
       local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
 
       if opts.inlay_hints.enabled and inlay_hint then
-        Util.lsp.on_attach(function(client, buffer)
-          if client.supports_method("textDocument/inlayHint") then
-            inlay_hint(buffer, true)
-          end
-        end)
+        --  Util.lsp.on_attach(function(client, buffer)
+        --    if client.supports_method("textDocument/inlayHint") then
+        --      inlay_hint(buffer, true)
+        --    end
+        --  end)
       end
 
       if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
@@ -189,69 +188,13 @@ local M = {
         mlsp.setup({ ensure_installed = ensure_installed, handlers = { setup } })
       end
 
-      if Util.lsp.get_config("denols") and Util.lsp.get_config("tsserver") then
-        local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
-        Util.lsp.disable("tsserver", is_deno)
-        Util.lsp.disable("denols", function(root_dir)
-          return not is_deno(root_dir)
-        end)
-      end
-    end,
-  },
-
-  -- cmdline tools and lsp servers
-  {
-    "williamboman/mason.nvim",
-    cmd = "Mason",
-    keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
-    build = ":MasonUpdate",
-    opts = {
-      ensure_installed = {
-        "ansible-language-server",
-        "arduino-language-server",
-        "autotools-language-server",
-        "bash-language-server",
-        "black",
-        "clangd",
-        "cmake-language-server",
-        "docker-compose-language-service",
-        "dockerfile-language-server",
-        "flake8",
-        "isort",
-        "json-lsp",
-        "marksman",
-        "mypy",
-        "shellcheck",
-        "shfmt",
-        "stylua",
-      },
-    },
-    ---@param opts MasonSettings | {ensure_installed: string[]}
-    config = function(_, opts)
-      require("mason").setup(opts)
-      local mr = require("mason-registry")
-      mr:on("package:install:success", function()
-        vim.defer_fn(function()
-          -- trigger FileType event to possibly load this newly installed LSP server
-          require("lazy.core.handler.event").trigger({
-            event = "FileType",
-            buf = vim.api.nvim_get_current_buf(),
-          })
-        end, 100)
-      end)
-      local function ensure_installed()
-        for _, tool in ipairs(opts.ensure_installed) do
-          local p = mr.get_package(tool)
-          if not p:is_installed() then
-            p:install()
-          end
-        end
-      end
-      if mr.refresh then
-        mr.refresh(ensure_installed)
-      else
-        ensure_installed()
-      end
+      -- if Util.lsp.get_config("denols") and Util.lsp.get_config("tsserver") then
+      --   local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
+      --   Util.lsp.disable("tsserver", is_deno)
+      --   Util.lsp.disable("denols", function(root_dir)
+      --     return not is_deno(root_dir)
+      --   end)
+      -- end
     end,
   },
 }

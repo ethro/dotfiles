@@ -7,33 +7,11 @@ local M = {
       vim.g.startuptime_tries = 10
     end,
   },
-  -- Session management. This saves your session in the background,
-  -- keeping track of open buffers, window arrangement, and more.
-  -- You can restore sessions when returning through the dashboard.
-  {
-    "folke/persistence.nvim",
-    event = "BufReadPre",
-    opts = { options = vim.opt.sessionoptions:get() },
-    -- stylua: ignore
-    keys = {
-      { "<leader>qs", function() require("persistence").load() end, desc = "Restore Session" },
-      { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
-      { "<leader>qd", function() require("persistence").stop() end, desc = "Don't Save Current Session" },
-    },
-  },
   {
     "nvimdev/dashboard-nvim",
     event = "VimEnter",
     opts = function()
-      -- For some reason AZ has to be misaligned here to properly align on dashboard.
-      local logo = [[
-        █████╗ ███████╗
-       ██╔══██╗╚══███╔╝
-      ███████║  ███╔╝
-     ██╔══██║ ███╔╝
-      ██║  ██║███████╗
-       ╚═╝  ╚═╝╚══════╝
-      ]]
+      local logo = [[]]
 
       logo = string.rep("\n", 8) .. logo .. "\n\n"
 
@@ -42,7 +20,7 @@ local M = {
         hide = {
           -- this is taken care of by lualine
           -- enabling this messes up the actual laststatus setting after loading a file
-          statusline = false,
+          statusline = true,
         },
         config = {
           header = vim.split(logo, "\n"),

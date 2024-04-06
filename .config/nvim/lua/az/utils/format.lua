@@ -121,6 +121,7 @@ function M.format(opts)
     if formatter.active then
       done = true
       Util.try(function()
+        print(formatter.name)
         return formatter.format(buf)
       end, { msg = "Formatter `" .. formatter.name .. "` failed" })
     end
@@ -132,7 +133,6 @@ function M.format(opts)
 end
 
 function M.setup()
-
   -- Autoformat autocmd
   vim.api.nvim_create_autocmd("BufWritePre", {
     group = vim.api.nvim_create_augroup("LazyFormat", {}),

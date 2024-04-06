@@ -1,4 +1,4 @@
-local Util = require("az.utils")
+-- local Util = require("az.utils")
 
 ---@class LazyConfig: LazyOptions
 local M = {}
@@ -129,9 +129,9 @@ function M.json.load()
     local ok, json = pcall(vim.json.decode, data, { luanil = { object = true, array = true } })
     if ok then
       M.json.data = vim.tbl_deep_extend("force", M.json.data, json or {})
-      if M.json.data.version ~= M.json.version then
-        Util.json.migrate()
-      end
+      -- if M.json.data.version ~= M.json.version then
+      --   Util.json.migrate()
+      -- end
     end
   end
 end
@@ -159,31 +159,31 @@ function M.setup(opts)
       end
       M.load("keymaps")
 
-      Util.format.setup()
-      Util.news.setup()
-      Util.root.setup()
+      -- Util.format.setup()
+      -- Util.news.setup()
+      -- Util.root.setup()
 
-      vim.api.nvim_create_user_command("LazyExtras", function()
-        Util.extras.show()
-      end, { desc = "Manage Lazy extras" })
+      -- vim.api.nvim_create_user_command("LazyExtras", function()
+      --   Util.extras.show()
+      -- end, { desc = "Manage Lazy extras" })
     end,
   })
 
-  Util.track("colorscheme")
-  Util.try(function()
-    if type(M.colorscheme) == "function" then
-      M.colorscheme()
-    else
-      vim.cmd.colorscheme(M.colorscheme)
-    end
-  end, {
-    msg = "Could not load your colorscheme",
-    on_error = function(msg)
-      Util.error(msg)
-      vim.cmd.colorscheme("habamax")
-    end,
-  })
-  Util.track()
+  -- Util.track("colorscheme")
+  -- Util.try(function()
+  --   if type(M.colorscheme) == "function" then
+  --     M.colorscheme()
+  --   else
+  --     vim.cmd.colorscheme(M.colorscheme)
+  --   end
+  -- end, {
+  --   msg = "Could not load your colorscheme",
+  --   on_error = function(msg)
+  --     Util.error(msg)
+  --     vim.cmd.colorscheme("habamax")
+  --   end,
+  -- })
+  -- Util.track()
 end
 
 ---@param buf? number
@@ -205,9 +205,9 @@ end
 function M.load(name)
   local function _load(mod)
     if require("lazy.core.cache").find(mod)[1] then
-      Util.try(function()
-        require(mod)
-      end, { msg = "Failed loading " .. mod })
+      -- Util.try(function()
+      --   require(mod)
+      -- end, { msg = "Failed loading " .. mod })
     end
   end
   -- always load az, then user file
@@ -235,8 +235,8 @@ function M.init()
   end
 
   package.preload["az.plugins.lsp.format"] = function()
-    Util.deprecate([[require("az.plugins.lsp.format")]], [[require("az.utils").format]])
-    return Util.format
+    --Util.deprecate([[require("az.plugins.lsp.format")]], [[require("az.utils").format]])
+    return nil -- Util.format
   end
 
   -- delay notifications till vim.notify was replaced or after 500ms
@@ -247,7 +247,7 @@ function M.init()
   -- after installing missing plugins
   M.load("options")
 
-  Util.plugin.setup()
+  -- Util.plugin.setup()
   M.json.load()
 end
 
