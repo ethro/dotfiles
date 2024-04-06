@@ -356,7 +356,6 @@ gitem2() {
   for remote in $(git branch -r); do git branch --track ${remote@origin/} $remote; done
 }
 
-
 #######################################
 # Convenience functions to remember how to get pre-defined compiler macros
 #######################################
@@ -373,7 +372,6 @@ _clang++_defines() {
   echo | clang++ -dM -E -x c++ -
 }
 
-
 #######################################
 # Create a generic c editorconfig file at the current working directory
 #######################################
@@ -386,4 +384,13 @@ tab_width = 4
 indent_size = 4
 auto_format = false
 EOF
+}
+
+#######################################
+# Pretty print the current PATH variable
+# Globals:
+#   PATH
+#######################################
+pp_path() {
+  echo "${PATH//:/$'\n'}"
 }

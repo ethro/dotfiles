@@ -1,6 +1,36 @@
 local Util = require("az.utils")
 local M = {
   {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim", -- required
+      "sindrets/diffview.nvim", -- optional - Diff integration
+
+      -- Only one of these is needed, not both.
+      "nvim-telescope/telescope.nvim", -- optional
+      -- "ibhagwan/fzf-lua", -- optional
+    },
+    opts = {
+      integrations = {
+        diffview = true,
+      },
+    },
+  },
+  {
+    "rmagatti/session-lens",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      {
+        "rmagatti/auto-session",
+        opts = {
+          auto_save_enabled = false,
+          auto_restore_enabled = false,
+          auto_session_enable_last_session = false,
+        },
+      },
+    },
+  },
+  {
     "metalelf0/jellybeans-nvim",
     dependencies = {
       "rktjmp/lush.nvim",
@@ -152,6 +182,18 @@ local M = {
         Util.telescope("find_files", { hidden = true, default_text = line })()
       end
 
+      local yank_selected_path = function()
+        local entry = require("telescope.actions.state").get_selected_entry()
+        local cb_opts = vim.opt.clipboard:get()
+        if vim.tbl_contains(cb_opts, "unnamed") then
+          vim.fn.setreg("*", entry.path)
+        end
+        if vim.tbl_contains(cb_opts, "unnamedplus") then
+          vim.fn.setreg("+", entry.path)
+        end
+        vim.fn.setreg("", entry.path)
+      end
+
       return {
         defaults = {
           prompt_prefix = " ",
@@ -171,7 +213,8 @@ local M = {
           end,
           mappings = {
             i = {
-              ["<c-t>"] = open_with_trouble,
+              ["<c-T>"] = open_with_trouble,
+              ["<c-y>"] = yank_selected_path,
               ["<a-t>"] = open_selected_with_trouble,
               ["<a-i>"] = find_files_no_ignore,
               ["<a-h>"] = find_files_with_hidden,

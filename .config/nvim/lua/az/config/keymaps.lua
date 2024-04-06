@@ -30,6 +30,8 @@ kmap("n", "<leader>uv", function() tld.toggle_virtual_text() end, { desc = "Togg
 -- stylua: ignore end
 
 kmap("n", "<leader>bd", ":bd<CR>", { desc = "Buffer delete" })
+kmap({ "n", "v", "i" }, "<F1>", "<nop>", { desc = "Don't spit help at me" })
+kmap("n", "gv", ":vsplit | lua vim.lsp.buf.definition()<CR>", { desc = "Go to definition in vertical split" })
 
 -- :J: From LazyVim
 local Util = require("az.utils")

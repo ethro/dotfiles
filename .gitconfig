@@ -11,6 +11,7 @@
     list = ls-tree -r master --name-only
 
     subu = submodule update --init --recursive
+    o = remote show origin -n
 
     lg = lg1
     lg1 = lg1-specific --all

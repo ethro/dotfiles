@@ -332,8 +332,7 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 5
 # Autostart applications
 #exec --no-startup-id sh ~/.config/xrandr/config.sh
 #exec --no-startup-id sh ~/.screenlayout/tv_laptop.sh
-#exec --no-startup-id feh --bg-fill ~/.config/bgs/wallpaper12.png &
-exec --no-startup-id source ~/.fehbg
+#exec --no-startup-id source ~/.fehbg
 exec --no-startup-id feh --bg-fill --randomize ~/.config/wallpapers/ &
 exec --no-startup-id sh ~/.config/polybar/launch.sh &
 exec_always --no-startup-id xmodmap ~/.Xmodmap &

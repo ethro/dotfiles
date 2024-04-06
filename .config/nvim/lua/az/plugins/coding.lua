@@ -24,7 +24,7 @@ local M = {
   },
   {
     -- https://github.com/stevearc/conform.nvim#installation
-    -- Lightweight yet powerfule formatter plugin for Neovim
+    -- Lightweight yet powerful formatter plugin for Neovim
     "stevearc/conform.nvim",
     config = function()
       require("conform").setup({
@@ -45,7 +45,6 @@ local M = {
           return { timeout_ms = 500, lsp_fallback = true }
         end,
       })
-
       -- TODO: Need to clean this up to encompass more disabling of auto features
       -- when working on legacy code that team members/project leads don't want changed.
       vim.api.nvim_create_user_command("FormatDisable", function(args)
@@ -119,7 +118,7 @@ local M = {
       "hrsh7th/cmp-path", -- source for file system paths
       "L3MON4D3/LuaSnip", -- snippet engine
       "saadparwaiz1/cmp_luasnip", -- for autocompletion
-      -- "petertriho/cmp-git", --
+      "petertriho/cmp-git", --
       -- "rafamadriz/friendly-snippets", -- useful snippets
       -- "onsails/lspkind.nvim", -- vs-code like pictograms
     },
@@ -157,13 +156,12 @@ local M = {
           end,
         }),
         sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-          { name = "nvim_lua" },
-          { name = "luasnip" },
-          -- { name = "cmp_git" }, -- gitcommit
-        }, {
-          { name = "buffer" },
-          { name = "path" },
+          { name = "nvim_lsp", priority = 1000 },
+          { name = "nvim_lua", priority = 1000 },
+          { name = "buffer", priority = 900 },
+          { name = "luasnip", priority = 800 },
+          { name = "path", priority = 200 },
+          { name = "cmp_git", priority = 100 },
         }),
         formatting = {
           format = function(_, item)

@@ -45,9 +45,10 @@ return {
       },
     },
   },
-  {
-    "Civitasv/cmake-tools.nvim",
-    event = "VeryLazy",
-    opts = {},
-  },
+  -- {
+  --   "Civitasv/cmake-tools.nvim",
+  --   -- cond = false,
+  --   event = "VeryLazy",
+  --   opts = {},
+  -- },
 }

@@ -28,6 +28,3 @@ export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 #:J:## check the window size after each command and, if necessary,
 #:J:## update the values of LINES and COLUMNS.
 #:J:#shopt -s checkwinsize
-
-# Prepend cd to directory names automatically
-shopt -s autocd 2>/dev/null
