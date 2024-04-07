@@ -187,17 +187,10 @@ kmap("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 kmap("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 kmap("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
-
+-- Harpoon ---------------------------------------------------------------------
 local harpoon = require("harpoon")
-
 kmap("n", "<M-a>", function() harpoon:list():add() end)
 kmap("n", "<M-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
-
-kmap("n", "<leader>hh", function() harpoon:list():select(1) end)
-kmap("n", "<leader>ht", function() harpoon:list():select(2) end)
-kmap("n", "<leader>hn", function() harpoon:list():select(3) end)
-kmap("n", "<leader>hs", function() harpoon:list():select(4) end)
-
 -- Toggle previous & next buffers stored within Harpoon list
 vim.keymap.set("n", "<M-p>", function() harpoon:list():prev() end)
 vim.keymap.set("n", "<M-n>", function() harpoon:list():next() end)
