@@ -194,3 +194,18 @@ kmap("n", "<M-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 -- Toggle previous & next buffers stored within Harpoon list
 vim.keymap.set("n", "<M-p>", function() harpoon:list():prev() end)
 vim.keymap.set("n", "<M-n>", function() harpoon:list():next() end)
+
+-- Toggle Diagnostics ----------------------------------------------------------
+-- TODO: Want to find another solution
+local tld = require("toggle_lsp_diagnostics")
+
+-- stylua: ignore start
+kmap("n", "<leader>uu", function() tld.toggle_underline() end, { desc = "Toggle LSP diag Underline" })
+kmap("n", "<leader>uv", function() tld.toggle_virtual_text() end, { desc = "Toggle LSP diag Virtual text" })
+-- kmap("n", "<leader>tls", function() tld.toggle_signs() end, { desc = "Toggle LSP diag Signs" })
+-- kmap("n", "<leader>tlp", function() tld.toggle_update_in_insert() end, { desc = "Toggle LSP" })
+-- kmap("n", "<leader>tld", function() tld.toggle_diagnostic() end, { desc = "Toggle LSP" })
+-- kmap("n", "<leader>tldd", function() tld.turn_on_diagnostics_default() end, { desc = "Toggle LSP" })
+-- kmap("n", "<leader>tldo", function() tld.turn_off_diagnostics() end, { desc = "Toggle LSP" })
+-- kmap("n", "<leader>tldf", function() tld.turn_on_diagnostics() end, { desc = "Toggle LSP" })
+-- stylua: ignore end
