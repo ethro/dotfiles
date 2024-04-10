@@ -1,5 +1,11 @@
 local M = {
   {
+    -- source for file system paths
+    "petertriho/cmp-git",
+    lazy = true,
+    opts = {},
+  },
+  {
     "hrsh7th/nvim-cmp",
     version = false, -- last release is way too old
     event = "InsertEnter",
