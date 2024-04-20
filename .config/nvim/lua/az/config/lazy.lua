@@ -1,3 +1,6 @@
+--[[
+-- https://github.com/folke/lazy.nvim
+--]]
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   -- bootstrap lazy.nvim
@@ -27,6 +30,7 @@ require("lazy").setup({
   checker = {
     enabled = true,
     frequency = secs_in_week, -- check weekly
+    notify = false, -- get a notification when new updates are found
   },
   change_detection = {
     notify = false,

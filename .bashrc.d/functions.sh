@@ -266,45 +266,57 @@ get_getlab_file() {
 # Back up neovim configuration locaitons
 #######################################
 ncfg_bak() {
+  bak_ext=bak
+  if [[ $1 != '' ]]; then
+    bak_ext=$1
+  fi
   # required
-  mv ~/.config/nvim{,.bak}
+  mv ~/.config/nvim{,.$bak_ext}
 
   # optional but recommended
-  mv ~/.local/share/nvim{,.bak}
-  mv ~/.local/state/nvim{,.bak}
-  mv ~/.cache/nvim{,.bak}
+  mv ~/.local/share/nvim{,.$bak_ext}
+  mv ~/.local/state/nvim{,.$bak_ext}
+  mv ~/.cache/nvim{,.$bak_ext}
 }
 
 #######################################
 # Remoe back up neovim configuration locaitons
 #######################################
 ncfg_rmbak() {
+  bak_ext=bak
+  if [[ $1 != '' ]]; then
+    bak_ext=$1
+  fi
   # required
-  rm -rf ~/.config/nvim.bak
+  rm -rf "$HOME/.config/nvim.$bak_ext"
 
   # optional but recommended
-  rm -rf ~/.local/share/nvim.bak
-  rm -rf ~/.local/state/nvim.bak
-  rm -rf ~/.cache/nvim.bak
+  rm -rf "$HOME/.local/share/nvim.$bak_ext"
+  rm -rf "$HOME/.local/state/nvim.$bak_ext"
+  rm -rf "$HOME/.cache/nvim.$bak_ext"
 }
 
 #######################################
 # Remove neovim configuration locations and move backups back to expected locations
 #######################################
 ncfg_revert() {
+  bak_ext=bak
+  if [[ $1 != '' ]]; then
+    bak_ext=$1
+  fi
   # required
   rm -rf ~/.config/nvim
-  mv ~/.config/nvim{.bak,}
+  mv ~/.config/nvim{.$bak_ext,}
 
   # optional but recommended
   rm -rf ~/.local/share/nvim
-  mv ~/.local/share/nvim{.bak,}
+  mv ~/.local/share/nvim{.$bak_ext,}
 
   rm -rf ~/.local/state/nvim
-  mv ~/.local/state/nvim{.bak,}
+  mv ~/.local/state/nvim{.$bak_ext,}
 
   rm -rf ~/.cache/nvim
-  mv ~/.cache/nvim{.bak,}
+  mv ~/.cache/nvim{.$bak_ext,}
 }
 
 #######################################
@@ -393,4 +405,8 @@ EOF
 #######################################
 pp_path() {
   echo "${PATH//:/$'\n'}"
+}
+
+ttask() {
+  tclock timer -d "$1" -M -e "paplay /usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga"
 }
