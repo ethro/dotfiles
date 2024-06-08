@@ -9,6 +9,10 @@ local M = {
       vim.cmd([[colorscheme jellybeans-nvim]])
     end,
   },
+  {
+    "rebelot/kanagawa.nvim",
+    priority = 10,
+  },
 }
 
 return M
