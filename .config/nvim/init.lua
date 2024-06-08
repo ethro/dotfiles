@@ -1,1 +1,1 @@
-require("az.init")
+require("ethro.init")

@@ -203,7 +203,7 @@ pv() {
 }
 
 #######################################
-# Create a python3 virtual env, activate the venv and install pkgs from the 
+# Create a python3 virtual env, activate the venv and install pkgs from the
 # requirements.txt file
 # Arguments:
 #   Name for the venv
@@ -233,7 +233,7 @@ pvp() {
 #   The username on the remote host to transfer the key to
 #######################################
 ssh_tx_pub() {
-  _PUBLIC_KEY=~/.ssh/id_rsa.pub
+  _PUBLIC_KEY=$3
   _HOST_ALIAS=$1
   _HOST_USERNAME=$2
   if [ -z "${_HOST_USERNAME}" ]; then
@@ -365,7 +365,8 @@ gitem() {
 # Retreive a local copy of all remote branches.
 #######################################
 gitem2() {
-  for remote in $(git branch -r); do git branch --track ${remote@origin/} $remote; done
+  #for remote in $(git branch -r); do git branch --track ${remote@origin/} $remote; done
+  echo "needs work"
 }
 
 #######################################
@@ -388,10 +389,10 @@ _clang++_defines() {
 # Create a generic c editorconfig file at the current working directory
 #######################################
 gen_editor_cfg() {
-  cat << EOF > .editorconfig
+  cat <<EOF >.editorconfig
 root = true
 
-[*.{c,cpp,h,hpp}]
+[*]
 tab_width = 4
 indent_size = 4
 auto_format = false
@@ -405,6 +406,18 @@ EOF
 #######################################
 pp_path() {
   echo "${PATH//:/$'\n'}"
+}
+
+mkd() {
+  mkdir -p "$1"
+  cd "$1" || return
+}
+
+git_tarj() {
+  _git_dir=$(basename "$PWD")
+  pushd .. || true
+  tar cjf "$_git_dir.tar.bz2" "$_git_dir"
+  popd || true
 }
 
 ttask() {
