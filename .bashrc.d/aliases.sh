@@ -30,6 +30,7 @@ alias 'hi?'='ping -q -W 5 -c 5 github.com'
 #alias share='miniserve --port 5000 --color-scheme "archlinux" --dirs-first --enable-tar --upload-files'
 
 alias usrmnt='sudo mount -o uid=$(id -u),gid=$(id -g)'
+alias usrmnt_ro='sudo mount -o uid=$(id -u),gid=$(id -g)'
 
 alias mntsd='usrmnt /dev/mmcblk0p1 /mnt/sd_card'
 alias umntsd='sudo umount /mnt/sd_card'
