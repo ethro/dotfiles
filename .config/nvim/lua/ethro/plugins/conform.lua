@@ -7,7 +7,7 @@ local M = {
       require("conform").setup({
         formatters_by_ft = {
           lua = { "stylua", "luaformatter" },
-          json = { "prettierd" },
+          -- json = { "prettierd" },
           markdown = { "prettierd" },
           sh = { "shfmt" },
           yaml = { "yamlfmt" },

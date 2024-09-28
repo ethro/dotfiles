@@ -1,9 +1,8 @@
-#
-# ~/.bash_profile
-#
+# .bash_profile
 
-if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" = "1" ]; then
-    exec startx
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
 fi
 
-[[ -f ~/.bashrc ]] && . ~/.bashrc
+# User specific environment and startup programs

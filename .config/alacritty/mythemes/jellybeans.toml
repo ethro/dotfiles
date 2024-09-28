@@ -2,7 +2,7 @@
 black = "0xbdbdbd"
 blue = "0xb1d8f6"
 cyan = "0x1ab2a8"
-green = "0xbddeab"
+green = "0x07e32f"
 magenta = "0xfbdaff"
 red = "0xffa1a1"
 white = "0xffffff"
@@ -23,5 +23,5 @@ white = "0xdedede"
 yellow = "0xffba7b"
 
 [colors.primary]
-background = "0x121212"
+background = "0x000000"
 foreground = "0xdedede"

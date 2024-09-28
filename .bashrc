@@ -1,31 +1,31 @@
 # .bashrc
 
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
-
 # Source global definitions
+# Arch based
 if [ -f /etc/bash.bashrc ]; then
-	. /etc/bash.bashrc
+    . /etc/bash.bashrc
 fi
+# Fedora based
 if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
+    . /etc/bashrc
 fi
 
 # User specific environment
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
-then
-    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+if ! [ -d "$HOME/.local/bin" ]; then
+    mkdir -p "$HOME/.local/bin"
+fi
+if ! [[ "$PATH" =~ $HOME/.local/bin: ]]; then
+    PATH="$HOME/.local/bin:$PATH"
 fi
 export PATH
 
-if ! [[ "$RUSTPATH" =~ "$HOME/.cargo/bin" ]]
-then
+if ! [[ "$RUSTPATH" =~ $HOME/.cargo/bin ]]; then
     RUSTPATH="$HOME/.cargo/bin:$RUSTPATH"
 fi
 export PATH=$PATH:$RUSTPATH
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
-if ! [[ "$GOPATH" =~ "$HOME/.config/go" ]]
-then
+if ! [[ "$GOPATH" =~ $HOME/.config/go ]]; then
     GOPATH="$HOME/.config/go:$GOPATH"
 fi
 export GOPATH
@@ -35,26 +35,24 @@ export PATH=$PATH:$HOME/.config/go/bin
 # export SYSTEMD_PAGER=
 
 # User specific aliases and functions
-
-EDITOR=/usr/bin/vim
+EDITOR=/usr/bin/nvim
 export EDITOR
 
-# Run any shell script in ~/.bashrc.d to set up environment
-for i in ~/.bashrc.d/*.sh ; do
-    if [ -r "$i" ]; then
-        if [ "${-#*i}" != "$-" ]; then
-            . "$i"
-        else
-            . "$i" >/dev/null
+if [ -d ~/.bashrc.d ]; then
+    for rc in ~/.bashrc.d/*; do
+        if [ -f "$rc" ]; then
+            . "$rc"
         fi
-    fi
-done
+    done
+fi
+unset rc
+[ -f "$HOME/.config/fzf/fzf_source.sh" ] && source "$HOME/.config/fzf/fzf_source.sh"
 
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-[ -f ~/.config/fzf/fzf_source.sh ] && source ~/.config/fzf/fzf_source.sh
-[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+if ! [[ "$PATH" =~ $HOME/go/bin: ]]; then
+    PATH="$HOME/go/bin:$PATH"
+fi
+export PATH
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion

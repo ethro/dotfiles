@@ -1,4 +1,5 @@
 import = ["/home/a00/.config/alacritty/mythemes/jellybeans.toml"]
+# import = ["/home/a00/.config/alacritty/themes/themes/hyper.toml"]
 live_config_reload = true
 
 [cursor.style]
@@ -12,4 +13,4 @@ family = "Cousine Nerd Font"
 #family = "FiraCode Nerd Font"
 
 [window]
-opacity = 1.0
+opacity = 0.85

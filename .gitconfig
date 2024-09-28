@@ -51,7 +51,6 @@
 #     autosetuprebase = always
 [core]
     excludesfile = ~/.gitignore_global
-    editor = ~/.local/bin/nvim
     #pager = nvim +Man!
 [color]
     ui = auto
