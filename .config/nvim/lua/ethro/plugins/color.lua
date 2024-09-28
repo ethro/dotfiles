@@ -1,6 +1,6 @@
 local M = {
   {
-    "metalelf0/jellybeans-nvim",
+    "ethro/jellybeans-nvim",
     dependencies = {
       "rktjmp/lush.nvim",
     },
