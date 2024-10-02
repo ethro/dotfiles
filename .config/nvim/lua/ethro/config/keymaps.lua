@@ -125,3 +125,7 @@ kmap(
   ":lua require('neogen').generate()<CR>",
   { desc = "Neogen generate", noremap = true, silent = true }
 )
+
+-- Diffview --------------------------------------------------------------------
+kmap("n", "<leaderdo", "<cmd>DiffviewOpen<cr>", { desc = "DiffviewOpen" })
+kmap("n", "<leaderd1", "<cmd>DiffviewClose<cr>", { desc = "DiffviewClose" })

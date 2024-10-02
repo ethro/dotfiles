@@ -414,9 +414,10 @@ mkd() {
 }
 
 git_tarj() {
+  _date=$(date '+%Y%m%d_%H%M%S')
   _git_dir=$(basename "$PWD")
   pushd .. || true
-  tar cjf "$_git_dir.tar.bz2" "$_git_dir"
+  tar cjf "${_git_dir}_${_date}.tar.bz2" "$_git_dir"
   popd || true
 }
 
