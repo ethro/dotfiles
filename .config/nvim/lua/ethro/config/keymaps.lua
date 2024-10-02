@@ -127,5 +127,5 @@ kmap(
 )
 
 -- Diffview --------------------------------------------------------------------
-kmap("n", "<leaderdo", "<cmd>DiffviewOpen<cr>", { desc = "DiffviewOpen" })
-kmap("n", "<leaderd1", "<cmd>DiffviewClose<cr>", { desc = "DiffviewClose" })
+kmap("n", "<leader>do", "<cmd>DiffviewOpen<cr>", { desc = "DiffviewOpen" })
+kmap("n", "<leader>dq", "<cmd>DiffviewClose<cr>", { desc = "DiffviewClose" })
