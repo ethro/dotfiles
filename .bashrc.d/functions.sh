@@ -9,6 +9,10 @@ gcr() {
   git clone --recursive "$@"
 }
 
+gsu() {
+  find . -name .git -exec sh -c "cd \"\$(dirname \"{}\")\"; printf \"|----- \"; pwd; git submodule update --init --recursive;" \;
+}
+
 #######################################
 # Traverse a directory, find git repos and submodules and perform the git action on each.
 # Arguments: Any git action to perform on any git repo/submodule discovered
@@ -190,6 +194,24 @@ rvim() {
     echo nvim +"$line" "$filepath"
     nvim +"$line" "$filepath"
   fi
+}
+
+#######################################
+# Create a python3 virtual env and activate the venv.
+# Arguments:
+#   Name for the venv
+#######################################
+pva() {
+  source ".venv_$1/bin/activate"
+}
+
+#######################################
+# Create a python3 virtual env and activate the venv.
+# Arguments:
+#   Name for the venv
+#######################################
+pvd() {
+  deactivate
 }
 
 #######################################

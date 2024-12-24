@@ -129,3 +129,7 @@ kmap(
 -- Diffview --------------------------------------------------------------------
 kmap("n", "<leader>do", "<cmd>DiffviewOpen<cr>", { desc = "DiffviewOpen" })
 kmap("n", "<leader>dq", "<cmd>DiffviewClose<cr>", { desc = "DiffviewClose" })
+
+vim.keymap.set("n", "<leader>td", function()
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { silent = true, noremap = true })
