@@ -424,3 +424,26 @@ git_tarj() {
 ttask() {
   tclock timer -d "$1" -M -e "paplay /usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga"
 }
+
+refresh_device() {
+  _DEV_PATH=$1
+  _confirmation="N"
+  read -rp "Wipe device [y/N]: $_DEV_PATH " _confirmation
+  if [ "$_confirmation" == "" ]; then
+    _confirmation="n"
+  fi
+  if [ "$_confirmation" == "y" ]; then
+    read -rp "Initialize GPT and filesystem? [y/N]: $_DEV_PATH " _confirmation
+    if [ "$_confirmation" == "" ]; then
+      _confirmation="n"
+    fi
+    echo "Refreshing $_DEV_PATH..."
+    sudo umount "$_DEV_PATH"*
+    sudo wipefs -a "$_DEV_PATH"
+    if [ "$_confirmation" == "y" ]; then
+      sudo sgdisk --clear "$_DEV_PATH"
+      sudo sgdisk -n 1:2048 -t 1:0700 -g "$_DEV_PATH" -p
+      sudo mkfs.exfat "$_DEV_PATH"1
+    fi
+  fi
+}

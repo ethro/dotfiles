@@ -127,15 +127,19 @@ function MUtil.telescope(builtin, opts)
   local params = { builtin = builtin, opts = opts }
   return function()
     builtin = params.builtin
-    opts = params.opts
-    opts = vim.tbl_deep_extend("force", { cwd = MUtil.root_get() }, opts or {}) -- --[[@as utils.telescope.opts]]
-    if builtin == "files" then
+    opts = params.opts or {}
+    if builtin == "gfiles" then
+      opts = vim.tbl_deep_extend("force", { cwd = MUtil.root_get() }, opts or {}) -- --[[@as utils.telescope.opts]]
       if vim.loop.fs_stat((opts.cwd or vim.loop.cwd()) .. "/.git") then
         opts.show_untracked = true
         builtin = "git_files"
       else
         builtin = "find_files"
       end
+    end
+    if builtin == "files" then
+      opts = vim.tbl_deep_extend("force", { cwd = opts.cwd }, opts or {}) -- --[[@as utils.telescope.opts]]
+      builtin = "find_files"
     end
     if opts.cwd and opts.cwd ~= vim.loop.cwd() then
       ---@diagnostic disable-next-line: inject-field
@@ -202,6 +206,11 @@ local M = {
         "<leader><space>",
         MUtil.telescope("files"),
         desc = "Find Files (root dir)",
+      },
+      {
+        "<leader>fg",
+        MUtil.telescope("gfiles"),
+        desc = "Find Git Files (repo dir)",
       },
       -- find
       { "<leader>fb", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Buffers" },
@@ -323,6 +332,12 @@ local M = {
         return vim.cmd("vsplit " .. entry.path)
       end
 
+      local open_split = function(prompt_bufnr, _mode)
+        local entry = require("telescope.actions.state").get_selected_entry()
+        vim.api.nvim_input("<esc>")
+        return vim.cmd("split " .. entry.path)
+      end
+
       local open_selected_with_trouble = function(...)
         return require("trouble.providers.telescope").open_selected_with_trouble(...)
       end
@@ -371,6 +386,7 @@ local M = {
               -- ["<c-T>"] = open_with_trouble,
               ["<c-t>"] = open_tab,
               ["<c-v>"] = open_vsplit,
+              ["<c-s>"] = open_split,
               ["<c-y>"] = yank_selected_path,
               ["<a-t>"] = open_selected_with_trouble,
               ["<a-i>"] = find_files_no_ignore,

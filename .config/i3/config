@@ -284,7 +284,7 @@ exec --no-startup-id sh ~/.config/polybar/launch.sh &
 # choose random background
 bindsym $alt+b exec feh --bg-fill --randomize ~/.config/wallpapers/
 exec --no-startup-id feh --bg-fill --randomize ~/.config/wallpapers/ 
-exec --no-startup-id picom -b
+exec --no-startup-id picom --backend glx -b
 
 bindsym $alt+l exec betterlockscreen -l
 exec --no-startup-id betterlockscreen -w dim
