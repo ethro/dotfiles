@@ -1,5 +1,4 @@
--- nvim v0.8.0
-return {
+local M = {
     "kdheepak/lazygit.nvim",
     lazy = true,
     cmd = {
@@ -19,3 +18,5 @@ return {
         { "<leader>Og", "<cmd>LazyGit<cr>", desc = "LazyGit" }
     }
 }
+
+return M

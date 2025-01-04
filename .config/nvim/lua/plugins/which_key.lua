@@ -23,7 +23,7 @@ local M = {
         { "[", group = "prev" },
         { "]", group = "next" },
         { "g", group = "goto" },
-        { "gs", group = "surround" },
+        -- { "gs", group = "surround" },
       },
     },
     config = function(_, opts)

@@ -435,12 +435,18 @@ mkd() {
   cd "$1" || return
 }
 
-git_tarj() {
+tarp() {
   _date=$(date '+%Y%m%d_%H%M%S')
-  _git_dir=$(basename "$PWD")
+  _dir=$(basename "$PWD")
   pushd .. || true
-  tar cjf "${_git_dir}_${_date}.tar.bz2" "$_git_dir"
+  tar cjf "${_dir}_${_date}.tar.bz2" "$_dir"
   popd || true
+}
+
+tard() {
+  _date=$(date '+%Y%m%d_%H%M%S')
+  _dir=$(basename "$1")
+  tar cjf "${_dir}_${_date}.tar.bz2" "$_dir"
 }
 
 ttask() {

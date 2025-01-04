@@ -28,9 +28,7 @@ local M = {
       },
     },
     config = function(_, opts)
-      -- local Util = require("az.utils")
-
-      local M = {}
+      local _M = {}
 
       local lint = require("lint")
       for name, linter in pairs(opts.linters) do
@@ -42,7 +40,7 @@ local M = {
       end
       lint.linters_by_ft = opts.linters_by_ft
 
-      function M.debounce(ms, fn)
+      function _M.debounce(ms, fn)
         local timer = vim.loop.new_timer()
         return function(...)
           local argv = { ... }
@@ -53,7 +51,7 @@ local M = {
         end
       end
 
-      function M.lint()
+      function _M.lint()
         -- Use nvim-lint's logic first:
         -- * checks if linters exist for the full filetype first
         -- * otherwise will split filetype by "." and add all those linters
@@ -87,7 +85,7 @@ local M = {
 
       vim.api.nvim_create_autocmd(opts.events, {
         group = vim.api.nvim_create_augroup("nvim-lint", { clear = true }),
-        callback = M.debounce(100, M.lint),
+        callback = _M.debounce(200, _M.lint),
       })
     end,
   },

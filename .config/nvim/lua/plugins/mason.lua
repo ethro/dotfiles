@@ -15,7 +15,7 @@ local M = {
         "isort",
         "black",
         "clang-format",
-        "cmakelang",
+        -- "cmakelang",
         "luaformatter",
         "prettierd",
         "shfmt",
@@ -34,7 +34,7 @@ local M = {
         -- LSP
         "ansible-language-server",
         "bash-language-server",
-        "cmake-language-server",
+        -- "cmake-language-server",
         "docker-compose-language-service",
         "dockerfile-language-server",
         "json-lsp",
